@@ -1,5 +1,8 @@
 require "traffic_spy/version"
+require "sinatra"
 
 module TrafficSpy
-  # Your code goes here...
+  get '/hi' do
+    "Hello World"
+  end
 end
