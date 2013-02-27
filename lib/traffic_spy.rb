@@ -1,8 +1,10 @@
-require "traffic_spy/version"
+# require "traffic_spy/version"
 require "sinatra"
+require "haml"
 
 module TrafficSpy
-  get '/hi' do
-    "Hello World"
+  get '/' do
+    haml :index
   end
+
 end
