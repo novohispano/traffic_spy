@@ -3,6 +3,7 @@ require "sinatra"
 require "haml"
 require "sequel"
 require "json"
+require "time"
 require "./lib/traffic_spy/db/schema"
 require "./lib/traffic_spy/models/init"
 
@@ -22,11 +23,11 @@ module TrafficSpy
     end
   end
 
-  post '/sources/:identifier/data' do 
-    @source = params[:identifier]
-    payload = JSON.parse(params[:payload])
-    @url = payload["url"]
-    @requested_at = payload["requestedAt"]
-    "#{@source} #{@url} #{@requested_at}"
-  end
+  # post '/sources/:identifier/data' do 
+  #   @source = params[:identifier]
+  #   payload = JSON.parse(params[:payload])
+  #   @url = payload["url"]
+  #   @requested_at = payload["requestedAt"]
+  #   "#{@source} #{@url} #{@requested_at}"
+  # end
 end

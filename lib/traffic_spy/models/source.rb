@@ -3,8 +3,6 @@ module TrafficSpy
     one_to_many :actions
 
     def self.process_params(params)
-      @identifier = params[:identifier]
-      @rooturl = params[:rootUrl]
       if missing_parameters?(params)
         {:code => 400, :message => "Bad Request! missing required parameters"}
       elsif already_exists?(params)
@@ -18,12 +16,9 @@ module TrafficSpy
     def self.missing_parameters?(params)
       identifier = params[:identifier]
       root = params[:rootUrl]
-      if identifier == nil || identifier == ""
-        true
-      elsif root == nil || root == ""
-        true
-      else
-        false
+      if identifier == nil || identifier == "" then true
+      elsif root == nil || root == "" then true
+      else false
       end
     end
 
@@ -36,7 +31,8 @@ module TrafficSpy
       root = params[:rootUrl]
       DB.from(:sources).insert(
         :identifier => identifier,
-        :root_url => root
+        :root_url => root,
+        :created_at => Time.now
         )
     end
   end
