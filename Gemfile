@@ -6,6 +6,7 @@ gem 'sinatra'
 gem 'pg'
 gem 'sequel'
 gem 'haml'
+gem 'json'
 
 group :development do
   gem 'rspec'
