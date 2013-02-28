@@ -9,20 +9,18 @@ module TrafficSpy
     many_to_one :ips
 
     def self.process_params(identifier, params)
-      payload = JSON.parse(params["payload"])
-      if missing_parameters?(payload)
+      if missing_parameters?(params)
         {:code => 400, :message => "Bad Request! missing required payload"}
-      elsif already_exists?(payload)
+      elsif already_exists?(params)
         {:code => 403, :message => "Identifier already exists!"}
       else
-        register(payload)
+        register(params)
         {:code => 200, :message => "OK"}
       end
     end
 
-    def self.missing_parameters?(payload)
-      true
-      #payload == nil || payload == ""
+    def self.missing_parameters?(params)
+      params["payload"] == nil #|| params["payload"] == "" #ask Frank
     end
 
     def self.already_exists?(params)
