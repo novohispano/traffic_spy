@@ -27,11 +27,9 @@ module TrafficSpy
     end
 
     def self.register(params)
-      identifier = params[:identifier]
-      root = params[:rootUrl]
       DB.from(:sources).insert(
-        :identifier => identifier,
-        :root_url => root,
+        :identifier => params[:identifier],
+        :root_url => params[:rootUrl],
         :created_at => Time.now
         )
     end
