@@ -3,6 +3,7 @@ module TrafficSpy
     one_to_many :actions
 
     def self.process_params(params)
+      @identifier = params[:identifier]
       if missing_parameters?(params)
         {:code => 400, :message => "Bad Request! missing required parameters"}
       elsif already_exists?(params)
@@ -12,7 +13,7 @@ module TrafficSpy
         {:code => 200, :message => "#{{identifier: @identifier}.to_json}"}
       end
     end
- 
+
     def self.missing_parameters?(params)
       identifier = params[:identifier]
       root = params[:rootUrl]

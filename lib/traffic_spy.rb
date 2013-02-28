@@ -14,20 +14,13 @@ module TrafficSpy
 
   post '/sources' do
     output = Source.process_params(params)
-    if output[:code] == 400
-      halt 400, output[:message]
-    elsif output[:code] == 403
-      halt 403, output[:message]
-    else
-      output[:message]
-    end
+    status output[:code]
+    body output[:message]
   end
 
-  # post '/sources/:identifier/data' do 
-  #   @source = params[:identifier]
-  #   payload = JSON.parse(params[:payload])
-  #   @url = payload["url"]
-  #   @requested_at = payload["requestedAt"]
-  #   "#{@source} #{@url} #{@requested_at}"
-  # end
+  post '/sources/:identifier/data' do |identifier|
+    output = Action.process_params(identifier, params)
+    status output[:code]
+    body output[:message]
+  end
 end
