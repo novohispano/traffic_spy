@@ -27,6 +27,10 @@ module TrafficSpy
       end
     end
 
+    def self.already_exists?(params)
+      DB.from(:sources).where(:identifier => params[:identifier]).to_a.count > 0
+    end
+
     def self.register(params)
       identifier = params[:identifier]
       root = params[:rootUrl]
@@ -34,10 +38,6 @@ module TrafficSpy
         :identifier => identifier,
         :root_url => root
         )
-    end
-
-    def self.already_exists?(params)
-      DB.from(:sources).where(:identifier => params[:identifier]).to_a.count > 0
     end
   end
 end
