@@ -21,4 +21,12 @@ module TrafficSpy
       output[:message]
     end
   end
+
+  post '/sources/:identifier/data' do 
+    @source = params[:identifier]
+    payload = JSON.parse(params[:payload])
+    @url = payload["url"]
+    @requested_at = payload["requestedAt"]
+    "#{@source} #{@url} #{@requested_at}"
+  end
 end
