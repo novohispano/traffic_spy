@@ -1,16 +1,22 @@
 # require "traffic_spy/version"
 require "sinatra"
-require "haml"
+require "erb"
 require "sequel"
 require "json"
 require "time"
+require "agent_orange"
+require "debugger"
 require "./lib/traffic_spy/db/schema"
 require "./lib/traffic_spy/models/init"
 
 module TrafficSpy
   
   get '/' do
-    haml :index
+    erb :index
+  end
+
+  get '/sources/:identifier/data' do
+    erb :sources_data
   end
 
   post '/sources' do

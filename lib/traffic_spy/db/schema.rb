@@ -35,9 +35,10 @@ end
 
 DB.create_table :user_agents unless DB.table_exists?(:user_agents) do
   primary_key :id
-  String :agent
-  String :OS
-  String :browser
+  String :platform #ua.device.platform
+  String :operating_system #ua.device.operating_system
+  String :engine_browser #ua.device.engine.browser
+  String :engine #ua.device.engine
   DateTime :created_at
   DateTime :updated_at
 end

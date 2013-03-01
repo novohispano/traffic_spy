@@ -1,0 +1,14 @@
+<html>
+  <head>
+    <title>Sources Data</title>
+  </head>
+  <body>
+    <h1>Please post some data!</h1>
+    <form action='/sources/:identifier/data' method='post'>
+      <input type='text' name='payload' />
+      <input type='submit'/>
+    </form>
+  </body>
+</html>
+
+curl -i -d 'payload={"url": "http://jumpstartlab.com/blog","requestedAt": "2013-02-16 21:38:28 -0700","respondedIn": 37,"requestType": "GET","referredBy": "http://jumpstartlab.com","eventName": "socialLogin"}' http://localhost:9393/sources/facebook/data
