@@ -1,6 +1,5 @@
 module TrafficSpy
   class Source
-    # one_to_many :actions
 
     def initialize(source)
       @id = source[:id]

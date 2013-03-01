@@ -24,7 +24,7 @@ module TrafficSpy
     def self.register(identifier, payload)
       DB.from(:actions).insert(
         :source_id     => Source.find_by_identifier(identifier),
-        :url_id        => Url.find_or_create(payload[:url]),
+        :url_id        => Url.find_or_create(payload["url"]),
         # :requested_at  => params["requestedAt"],
         # :responded_in  => params["respondedIn"],
         # :referrer_id   => referrers_finder(url),
@@ -33,8 +33,8 @@ module TrafficSpy
         # :user_agent_id => user_agents_finder(agent),
         # :resolution_id => 
         # :ip_id         => 
-        # :created_at    => Time.now
-        # :updated_at    => nil
+        :created_at    => Time.now,
+        :updated_at    => Time.now
         )
     end
     #   root = params[:rootUrl]
