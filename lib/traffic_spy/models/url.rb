@@ -1,5 +1,5 @@
 module TrafficSpy
-  class Url < Sequel::Model
-    one_to_many :actions
+  class Url 
+    
   end
 end

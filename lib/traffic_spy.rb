@@ -21,14 +21,19 @@ module TrafficSpy
     else
       output = {:code => 400, :message => "Bad Request! missing required parameters"}
     end
-
     status output[:code]
     body output[:message]
   end
 
   post '/sources/:identifier/data' do |identifier|
-    extract_params(params,:identifier,:rootUrl)
-    output = Action.process_params(identifier, params)
+    payload = JSON.parse(params["payload"])
+    if Action.exists?(identifier, payload)
+      output = {:code => 403, :message => "Request payload already received."}
+    elsif Action.create(identifier, payload)
+      output = {:code => 200, :message => "OK"}
+    else
+      output = {:code => 400, :message => "Bad Request! missing payload"}
+    end
     status output[:code]
     body output[:message]
   end

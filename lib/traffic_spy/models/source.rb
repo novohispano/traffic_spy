@@ -1,6 +1,16 @@
 module TrafficSpy
-  class Source < Sequel::Model
-    one_to_many :actions
+  class Source
+    # one_to_many :actions
+
+    def initialize(source)
+      @id = source[:id]
+      @identifier = source[:identifier]
+      @root_url = source[:root_url]
+    end
+
+    def self.find_by_identifier(identifier)
+      DB.from(:sources).where(:identifier => identifier).to_a[0][:id]
+    end
 
     def self.exists?(params)
       DB.from(:sources).where(:identifier => params[:identifier]).to_a.count > 0
@@ -27,6 +37,5 @@ module TrafficSpy
         :created_at => Time.now
         )
     end
-    
   end
 end

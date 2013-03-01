@@ -35,7 +35,7 @@ end
 
 DB.create_table :user_agents unless DB.table_exists?(:user_agents) do
   primary_key :id
-  String :agent_string
+  String :agent
   String :OS
   String :browser
   DateTime :created_at
