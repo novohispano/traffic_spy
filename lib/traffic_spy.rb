@@ -32,7 +32,7 @@ module TrafficSpy
   end
 
   post '/sources/:identifier/data' do |identifier|
-    payload = JSON.parse(params["payload"])
+    payload = JSON.parse(params["payload"].gsub(/;/, ""))
     if Action.exists?(identifier, payload)
       output = {:code => 403, :message => "Request payload already received."}
     elsif Action.create(identifier, payload)
