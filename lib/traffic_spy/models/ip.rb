@@ -2,15 +2,15 @@ module TrafficSpy
   class IP
     def self.find_or_create(address)
       if IP.exists?(address)
-        IP.find_by_url(address)[:id]
+        IP.find_by_address(address)[:id]
       else
         IP.register(address)
-        IP.find_by_url(address)[:id]
+        IP.find_by_address(address)[:id]
       end
     end
 
     def self.exists?(address)
-      IP.find_by_url(address).to_a.count > 0
+      IP.find_by_address(address).to_a.count > 0
     end
 
     def self.register(address)
@@ -21,7 +21,7 @@ module TrafficSpy
         )
     end
 
-    def self.find_by_url(address)
+    def self.find_by_address(address)
       DB.from(:ips).where(:address => address).to_a[0]
     end
   end
