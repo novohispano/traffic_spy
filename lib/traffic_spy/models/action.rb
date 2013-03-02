@@ -1,4 +1,4 @@
-module TrafficSpy
+  module TrafficSpy
   class Action 
 
     def self.exists?(identifier, payload)
