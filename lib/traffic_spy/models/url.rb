@@ -1,5 +1,16 @@
 module TrafficSpy
   class Url
+    attr_reader :id, :url
+
+    def initialize(params)
+      @id = params[:id]
+      @url = params[:url]
+    end
+
+    def self.find(search)
+      DB.from(:urls).where(search).map{|row| Url.new(row)}.first
+    end
+
     def self.find_or_create(url)
       if Url.exists?(url)
         Url.find_by_url(url)[:id]
