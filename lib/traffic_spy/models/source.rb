@@ -1,6 +1,5 @@
 module TrafficSpy
   class Source
-
     def initialize(source)
       @id = source[:id]
       @identifier = source[:identifier]

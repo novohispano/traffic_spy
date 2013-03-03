@@ -2,15 +2,15 @@
 require "sinatra"
 require "erb"
 require "sequel"
-require "json"
+require "yajl/json_gem"
 require "time"
 require "agent_orange"
 require "debugger"
+
 require "./lib/traffic_spy/db/schema"
 require "./lib/traffic_spy/models/init"
 
 module TrafficSpy
-  
   get '/' do
     erb :index
   end
@@ -32,13 +32,17 @@ module TrafficSpy
   end
 
   post '/sources/:identifier/data' do |identifier|
-    payload = JSON.parse(params["payload"].gsub(/;/, ""))
-    if Action.exists?(identifier, payload)
-      output = {:code => 403, :message => "Request payload already received."}
-    elsif Action.create(identifier, payload)
-      output = {:code => 200, :message => "OK"}
-    else
+    if params["payload"] == nil || params["payload"] == ''
       output = {:code => 400, :message => "Bad Request! missing payload"}
+    else
+      json = StringIO.new(params["payload"])
+      parser = Yajl::Parser.new
+      payload = parser.parse(json)
+      if Action.exists?(payload)
+        output = {:code => 403, :message => "Request payload already received."}
+      else Action.create(identifier, payload)
+        output = {:code => 200, :message => "OK"}
+      end
     end
     status output[:code]
     body output[:message]

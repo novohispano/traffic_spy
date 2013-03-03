@@ -8,6 +8,8 @@ gem 'sequel'
 gem 'haml'
 gem 'json'
 gem 'agent_orange'
+gem 'sqlite3'
+gem 'yajl-ruby'
 
 group :development do
   gem 'rspec'
