@@ -5,15 +5,11 @@
       true if Action.find_by_payload(payload).count > 0 
     end
 
-    def self.create(identifier, payload)
-      register(identifier, payload)
-    end
-
     def self.find_by_payload(payload)
       DB.from(:actions).where(:requested_at => payload["requestedAt"]).to_a
     end
 
-    def self.register(identifier, payload)
+    def self.create(identifier, payload)
       DB.from(:actions).insert(
         :source_id     => Source.find_by_identifier(identifier),
         :url_id        => Url.find_or_create(payload["url"]),

@@ -1,6 +1,5 @@
 module TrafficSpy
   class UserAgent
-
     def self.parse_params(params)
       AgentOrange::UserAgent.new(params)
     end
