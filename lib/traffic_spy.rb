@@ -10,13 +10,15 @@ require "debugger"
 require "./lib/traffic_spy/db/schema"
 require "./lib/traffic_spy/models/init"
 
+
 module TrafficSpy
   get '/' do
-    erb :index
+    @sources = Source.all
+    erb :index, :layout => :main_layout
   end
 
-  get '/sources/:identifier/data' do
-    erb :sources_data
+  get '/sources/:identifier' do |identifier|
+    erb :sources_data, :layout => :main_layout
   end
 
   post '/sources' do

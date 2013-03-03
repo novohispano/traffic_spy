@@ -1,17 +1,27 @@
 module TrafficSpy
   class Source
-    def initialize(source)
-      @id = source[:id]
-      @identifier = source[:identifier]
-      @root_url = source[:root_url]
+    attr_reader :id, :identifier, :root_url
+
+    def initialize(params)
+      @id = params[:id]
+      @identifier = params[:identifier]
+      @root_url = params[:root_url]
+    end
+
+    def self.table
+      DB.from(:sources)
+    end
+
+    def self.all
+      table.select.collect{|row| Source.new(row)}
     end
 
     def self.find_by_identifier(identifier)
-      DB.from(:sources).where(:identifier => identifier).to_a[0][:id]
+      table.where(:identifier => identifier).to_a[0][:id]
     end
 
     def self.exists?(params)
-      DB.from(:sources).where(:identifier => params[:identifier]).to_a.count > 0
+      table.where(:identifier => params[:identifier]).to_a.count > 0
     end
 
     def self.create(params)
@@ -29,7 +39,7 @@ module TrafficSpy
     end
 
     def self.register(params)
-      DB.from(:sources).insert(
+      table.insert(
         :identifier => params[:identifier],
         :root_url => params[:rootUrl],
         :created_at => Time.now
