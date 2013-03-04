@@ -27,7 +27,8 @@ module TrafficSpy
     def self.register(url)
       DB.from(:urls).insert(
         :url => url, 
-        :created_at => Time.now
+        :created_at => Time.now,
+        :updated_at => Time.now
         )
     end
 

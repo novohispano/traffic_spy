@@ -20,7 +20,9 @@ module TrafficSpy
     end
 
     get '/sources/:identifier' do |identifier|
-      @actions = Action.find_all_by_identifier(identifier)
+      @js = 'charts.js'
+      @source = identifier
+      @actions ||= Action.find_all_by_identifier(identifier)
       @urls = Action.urls(@actions)
       erb :sources_data, :layout => :main_layout
     end
@@ -53,5 +55,6 @@ module TrafficSpy
       status output[:code]
       body output[:message]
     end
+
   end
 end

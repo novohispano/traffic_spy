@@ -42,7 +42,8 @@ module TrafficSpy
       table.insert(
         :identifier => params[:identifier],
         :root_url => params[:rootUrl],
-        :created_at => Time.now
+        :created_at => Time.now,
+        :updated_at => Time.now
         )
     end
   end
