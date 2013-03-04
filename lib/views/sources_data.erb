@@ -16,6 +16,7 @@
       <div>count: <%= request_count %></div>
     <% end %>
 </div>
+<div class="span6" id="bar-example" style="height:300px;"></div>
 
 <div>
   <h4>Browser Breakdown</h4>
@@ -67,3 +68,22 @@
   <h4></h4>
   <p>Events: <%# "Events", source.events_url %></p>
 </div>
+
+<%# @urls.map{|each| {url: each[0], count: each[1]} %>
+  
+<script>Morris.Bar({
+  element: 'bar-example',
+  data: [
+    { y: '2006', a: 100 },
+    { y: '2007', a: 75},
+    { y: '2008', a: 50 },
+    { y: '2009', a: 75 },
+    { y: '2010', a: 50 },
+    { y: '2011', a: 75 },
+    { y: '2012', a: 100 }
+  ],
+  xkey: 'y',
+  ykeys: 'a',
+  labels: 'Series A'
+});</script>
+

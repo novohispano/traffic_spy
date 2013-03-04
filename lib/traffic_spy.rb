@@ -20,7 +20,6 @@ module TrafficSpy
     end
 
     get '/sources/:identifier' do |identifier|
-      @js = 'charts.js'
       @source = identifier
       @actions ||= Action.find_all_by_identifier(identifier)
       @urls = Action.urls(@actions)
