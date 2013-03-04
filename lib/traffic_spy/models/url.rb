@@ -1,6 +1,7 @@
 module TrafficSpy
   class Url
     extend Finder
+    
     attr_reader :id, :url
 
     def initialize(params)
@@ -11,16 +12,6 @@ module TrafficSpy
     def self.table
       DB.from(:urls)
     end
-
-    def self.find_or_create(url)
-      if exists?(:url => url)
-        find(:url => url).id
-      else
-        register(url)
-        find(:url => url).id
-      end
-    end
-
 
     def self.register(url)
       table.insert(

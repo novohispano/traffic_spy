@@ -8,13 +8,13 @@ module TrafficSpy
       table.where(search).to_a.count > 0
     end
 
-    # def find_or_create(value)
-    #   if exits?(:url => value)
-    #     find(:url => value).id
-    #   else
-    #     register(value)
-    #     find(:url => value).id
-    #   end
-    # end
+    def find_or_create(attribute, value)
+      if exists?(attribute.to_sym => value)
+        find(attribute.to_sym => value).id
+      else
+        register(value)
+        find(attribute.to_sym => value).id
+      end
+    end
   end
 end

@@ -15,7 +15,7 @@
                 :updated_at
 
     def initialize(params)
-      @id = params[:id]
+      @id        = params[:id]
       @source_id = params[:source_id]
       @url_id = params[:url_id]
       @requested_at = params[:requested_at]
@@ -60,7 +60,7 @@
     def self.create(identifier, payload)
       DB.from(:actions).insert(
         :source_id     => Source.find_by_identifier(identifier),
-        :url_id        => Url.find_or_create(payload["url"]),
+        :url_id        => Url.find_or_create("url", payload["url"]),
         :requested_at  => payload["requestedAt"],
         :responded_in  => payload["respondedIn"],
         :referrer_id   => Referrer.find_or_create(payload["referredBy"]),
