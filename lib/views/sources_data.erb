@@ -1,5 +1,5 @@
 <h1><%= @source.upcase %> Statistics</h1>
-<div class="pull-right">
+<div class="">
   <h3>All Actions for <%= @source.upcase %></h3>
     <ul class="unstyled">
       <% @actions.each do |action| %>
@@ -11,8 +11,8 @@
 <div>
   <h4>URL Breakdown</h4>
   <p>Most requested URLS to least requested URLS (url)</p>
-    <% @urls.each do |path,request_count| %>
-      <div>path: <a href="/sources/<%= @source %>/urls/<%= path.gsub("http://","").gsub("#{@source}","").gsub(".com/","") %>"><%= path %></a></div>
+    <% @urls.each do |id,request_count| %>
+      <div>path: <a href="/sources/<%= @source %>/urls/<%= id %>"><%= id %></a></div>
       <div>count: <%= request_count %></div>
     <% end %>
 </div>

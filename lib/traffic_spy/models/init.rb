@@ -1,3 +1,4 @@
+require "./lib/traffic_spy/models/finder"
 require "./lib/traffic_spy/models/action"
 require "./lib/traffic_spy/models/source"
 require "./lib/traffic_spy/models/url"
