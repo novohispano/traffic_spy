@@ -27,6 +27,11 @@ module TrafficSpy
       erb :sources_data, :layout => :main_layout
     end
 
+    get '/sources/*/urls/*' do 
+      @params = params
+      erb :urls, :layout => :main_layout
+    end
+
     post '/sources' do
       if Source.exists?(params)
         output = {:code => 403, :message => "Identifier already exists!"}

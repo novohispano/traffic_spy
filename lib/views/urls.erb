@@ -1,0 +1,6 @@
+<p>welcome to <%# @params[:id] %> and <%# @params[:path] %></p>
+<% @params.each do |k,v| %>
+<h1>Key: <%= k %></h1>
+  <h2>Value: <%= v %></h2>
+
+  <% end %>
