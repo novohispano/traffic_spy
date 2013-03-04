@@ -58,7 +58,8 @@
   <link rel="shortcut icon" href="../assets/ico/favicon.png">
 </head>
 <body>
- <%= yield %>
- <%= erb :footer %>
+  <%= erb :header_nav %>
+  <%= yield %>
+  <%= erb :footer %>
 </body>
 </html>

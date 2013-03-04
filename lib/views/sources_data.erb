@@ -1,70 +1,69 @@
 <div>
-  <h1>Source Show</h1>
-
-    <ul>
-      <li>Most requested URLS to least requested URLS (url)</li>
-      <li>Web browser breakdown across all requests (userAgent)</li>
-      <li>OS breakdown across all requests (userAgent)</li>
-      <li>Screen Resolution across all requests (resolutionWidth x </li>resolutionHeight)
-      <li>Longest, average response time per URL to shortest, </li>average response time per URL
-      <li>Hyperlinks of each url to view url specific data</li>
-      <li>Hyperlink to view aggregate event data</li>
-    </ul>
-    <hr>
-
+  <h1><%= @source.upcase %> Statistics</h1>
+  <h3>All Actions for <%= @source.upcase %></h3>
     <ul class="unstyled">
-      <h2>View Stats</h2>
       <% @actions.each do |action| %>
         <li><%= action.id %></li>
       <% end %>
     </ul>
-    <h3>URL Breakdown</h3>
-      <% @urls.each do |path,request_count| %>
-  <div>path:  <%= path %></div>
-  <div>count: <%= request_count %></div>
-      <% end %>
-
-<hr>
-<h3>URL Response Time</h3>
-
-<%# source.urls.sort_by {|url| url.average_response }.reverse.each do |url| %>
-  <div>path:  <%# link_to url.path, url %></div>
-  <div>average response: <%# url.average_response %></div>
-<# end %>
-
-
-<hr>
-<h3>Browser Breakdown</h3>
-
-<# source.browsers.sort_by {|browser| browser.request_count }.reverse.each do |browser| %>
-
-  <div>browser: <%# browser.name %></div>
-  <div>count: <%# browser.request_count %></div>
-
-<# end %>
-
-<hr>
-<h3>OS Breakdown</h3>
-
-<# source.operating_systems.sort_by {|os| os.request_count }.reverse.each do |os| %>
-
-  <div>os: <%# os.name %></div>
-  <div>count: <%# os.request_count %></div>
-
-<# end %>
-
-<hr>
-<h3>Resolution Breakdown</h3>
-
-<# source.resolutions.sort_by {|res| res.request_count }.reverse.each do |resolution| %>
-
-  <div>resolution: <%# resolution.name %></div>
-  <div>count: <%# resolution.request_count %></div>
-
-<# end %>
-
-<hr/>
+</div>
 
 <div>
-  <%# link_to "Events", source.events_url %>
+  <h4>URL Breakdown</h4>
+  <p>Most requested URLS to least requested URLS (url)</p>
+    <% @urls.each do |path,request_count| %>
+      <div>path: <%= path %></div>
+      <div>count: <%= request_count %></div>
+    <% end %>
+</div>
+
+<div>
+  <h4>Browser Breakdown</h4>
+  <p>Web browser breakdown across all requests (userAgent)</p>
+  <%# source.browsers.each do |browser,count| %>
+    <div>browser: <%# browser.name %></div>
+    <div>count: <%# browser.request_count %></div>
+  <%# end %>
+</div>
+
+<div>
+  <h4>OS Breakdown</h4>
+  <p>OS breakdown across all requests (userAgent)</p>
+  <%# operating_systems.each do |os,count| %>
+    <div>os: <%# os %></div>
+    <div>count: <%# count %></div>
+  <%# end %>
+</div>
+
+<div>
+  <h4>Resolution Breakdown</h4>
+  <p>Screen Resolution across all requests (Width x Height)</p>
+  <%# resolutions.each do |resolution, count| %>
+    <div>resolution: <%# resolution %></div>
+    <div>count: <%# count %></div>
+  <%# end %>
+</div>
+
+<div>
+  <h4>Average Response Time</h4>
+  <p>Longest average response time per URL to shortest</p>
+  <%# @url_response do |url| %>
+    <div>path:  <%# link_to url.path, url %></div>
+    <div>average response: <%# url.average_response %></div>
+  <%# end %>
+</div>
+
+<div>
+  <h4></h4>
+  <p>Hyperlinks of each url to view url specific data</p>
+</div>
+
+<div>
+  <h4></h4>
+  <p>Hyperlink to view aggregate event data</p>
+</div>
+
+<div>
+  <h4></h4>
+  <p>Events: <%# "Events", source.events_url %></p>
 </div>

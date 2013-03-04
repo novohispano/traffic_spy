@@ -4,12 +4,13 @@ Bundler.require
 namespace :setup do
   desc "Run payloads"
   task :payloads do
-    5.times do 
-      a = %w(jumpstartlab facebook google jorge blair tacobell)
-      b = a.sample
+    10.times do 
+      articles = %w(blog article news jorge)
+      a = articles.sample
+      sources = %w(jumpstartlab facebook google jorge blair tacobell)
+      b = sources.sample
 
-      `curl -i -d 'payload={"url":"http://{b}.com/blog","requestedAt":"#{(1900..2020).to_a.sample}-02-11 21:38:10 -0700","respondedIn":37,"referredBy":"http://#{a.sample}.com","requestType":"GET","parameters":[],"eventName": "socialLogin","userAgent":"Mozilla/5.0 (Macintosh%3B Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17","resolutionWidth":"1920","resolutionHeight":"1280","ip":"#{(1..255).to_a.sample}.29.#{(1..255).to_a.sample}.211"}' http://localhost:4567/sources/#{b}/data`
-      sleep 1
+      `curl -i -d 'payload={"url":"http://#{b}.com/#{a}","requestedAt":"#{Time.now}","respondedIn":#{(1..100).to_a.sample},"referredBy":"http://#{sources.sample}.com","requestType":"GET","parameters":[],"eventName": "socialLogin","userAgent":"Mozilla/5.0 (Macintosh%3B Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17","resolutionWidth":"1920","resolutionHeight":"1280","ip":"#{(1..255).to_a.sample}.#{(1..255).to_a.sample}.#{(1..255).to_a.sample}.211"}' http://localhost:9393/sources/#{b}/data`
     end
   end
 end
