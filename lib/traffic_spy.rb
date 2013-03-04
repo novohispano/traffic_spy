@@ -4,7 +4,7 @@ require "erb"
 require "sequel"
 require "yajl/json_gem"
 require "time"
-require "agent_orange"
+require "useragent"
 require "debugger"
 
 require "./lib/traffic_spy/db/schema"
@@ -21,7 +21,7 @@ module TrafficSpy
 
     get '/sources/:identifier' do |identifier|
       @source = identifier
-      @actions ||= Action.find_all_by_identifier(identifier)
+      @actions = Action.find_all_by_identifier(identifier)
       @urls = Action.urls(@actions)
       erb :sources_data, :layout => :main_layout
     end

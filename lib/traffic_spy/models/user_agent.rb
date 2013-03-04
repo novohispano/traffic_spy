@@ -1,7 +1,7 @@
 module TrafficSpy
-  class UserAgent
+  class Agent
     def self.parse_params(params)
-      AgentOrange::UserAgent.new(params)
+      UserAgent.parse(params)
     end
 
     def self.find_or_create(params)
@@ -20,16 +20,16 @@ module TrafficSpy
 
     def self.register(agent)
       DB.from(:user_agents).insert(
-        :operating_system => agent.device.operating_system.to_s,
-        :browser          => agent.device.engine.browser.to_s,
+        :operating_system => agent.platform.to_s,
+        :browser          => agent.browser.to_s,
         :created_at       => Time.now,
         :updated_at       => Time.now
         )
     end
 
     def self.find_agents(agent)
-      DB.from(:user_agents).where(:operating_system => agent.device.operating_system.to_s,
-                                  :browser => agent.device.engine.browser.to_s).to_a
+      DB.from(:user_agents).where(:operating_system => agent.platform.to_s,
+                                  :browser => agent.browser.to_s).to_a
     end
   end
 end

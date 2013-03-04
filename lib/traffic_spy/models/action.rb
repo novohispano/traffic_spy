@@ -40,7 +40,7 @@
 
     def self.urls(actions)
       urls = Hash.new(0)
-      actions.map{|action| urls[Url.find(:id => action.url_id).url] += 1}
+      actions.map{|action| urls[Url.find(id: action.url_id).url] += 1}
       urls.sort_by {|k,v| -v}
     end
 
@@ -66,7 +66,7 @@
         :referrer_id   => Referrer.find_or_create(payload["referredBy"]),
         :request_type  => payload["requestType"],
         :event_id      => Event.find_or_create(payload["eventName"]),
-        :user_agent_id => UserAgent.find_or_create(payload["userAgent"]),
+        :user_agent_id => Agent.find_or_create(payload["userAgent"]),
         :resolution_id => Resolution.find_or_create(payload["resolutionWidth"], 
                                                     payload["resolutionHeight"]),
         :ip_id         => IP.find_or_create(payload["ip"]),

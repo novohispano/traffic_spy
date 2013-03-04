@@ -7,7 +7,7 @@ gem 'pg'
 gem 'sequel'
 gem 'haml'
 gem 'json'
-gem 'agent_orange'
+gem 'useragent'
 gem 'sqlite3'
 gem 'yajl-ruby'
 

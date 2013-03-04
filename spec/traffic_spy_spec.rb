@@ -39,12 +39,6 @@ module TrafficSpy
         expect(payload["userAgent"]).to eq "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17"
       end
 
-      it "should create a payload" do 
-        Action.create("test", payload)
-        expect(Action.exists?(payload)).to eq true
-      end
-      
-
     end
   end
 end

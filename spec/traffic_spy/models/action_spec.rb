@@ -18,7 +18,7 @@ module TrafficSpy
         }}
 
       it ".create" do
-        identifier = "blair"
+        identifier = "jumpstartlab"
         Action.create(identifier, :payload)
         expect(Action.exists?(:payload)).to eq true
       end
@@ -28,9 +28,6 @@ module TrafficSpy
         expect(Action.exists?(:payload)).to eq true
       end
 
-      it ".find_by_payload" do
-        expect(Action.exists?(:payload)).to eq true
-      end
     end
   end
 end
