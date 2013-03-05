@@ -36,8 +36,16 @@ module TrafficSpy
     end
 
     get '/sources/*/urls/*' do 
-      @params = params
+      @identifier, path = params[:splat]
+      @path             = path.prepend("/")
+      pass              unless Url.exists?(:path => @path)
+      url_id            = Url.find(:path => @path).id
+      @actions          = Action.find_all(:url_id => url_id)
       erb :urls
+    end
+
+    get '/sources/*/urls/*' do 
+      "URL not Requested"
     end
 
     post '/sources' do

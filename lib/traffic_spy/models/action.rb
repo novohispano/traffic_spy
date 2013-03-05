@@ -1,5 +1,7 @@
   module TrafficSpy
   class Action 
+    extend Finder
+    
     attr_reader :id, 
                 :source_id,
                 :url_id,
@@ -96,7 +98,7 @@
 
     def self.find_all_by_identifier(identifier)
       id = Source.find_by_identifier(identifier)
-      DB.from(:actions).where(:source_id => id).map{|row| Action.new(row)}
+      DB.from(:actions).where(:source_id => id).map{ |row| Action.new(row) }
     end
     
     def self.exists?(payload)

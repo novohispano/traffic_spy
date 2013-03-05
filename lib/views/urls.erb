@@ -1,6 +1,7 @@
-<p>welcome to <%# @params[:id] %> and <%# @params[:path] %></p>
-<% @params.each do |k,v| %>
-<h1>Key: <%= k %></h1>
-  <h2>Value: <%= v %></h2>
-
+<h1>Currently viewing path: "<%= @path %>" for <a href="/sources/<%= @identifier %>"><%= @identifier %></a></h1>
+<h2></h2>
+<ul>
+  <% @actions.collect { |action| action.responded_in }.sort.reverse.each do |time| %>
+  <li><%= time %>ms</li>
   <% end %>
+</ul>
