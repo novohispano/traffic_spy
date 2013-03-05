@@ -1,0 +1,8 @@
+<h1>Currently viewing events for <a href="/sources/<%= @source.identifier %>">
+  <%= @source.identifier %></a></h1>
+<h2></h2>
+<ul>
+  <% @events.each do |event, count| %>
+  <li><%= count %> views: <%= event %></li>
+  <% end %>
+</ul>

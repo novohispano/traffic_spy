@@ -1,4 +1,4 @@
-# require "traffic_spy/version"
+
 require "sinatra"
 require "erb"
 require "sequel"
@@ -16,6 +16,17 @@ module TrafficSpy
     get '/' do
       @sources = Source.all
       erb :index
+    end
+
+    get '/sources/:identifier/events' do |identifier|
+      @source       = Source.find(:identifier => identifier)
+      @actions      = Action.find_all_by_identifier(identifier)
+      @events       = Action.events(@actions)
+      erb :events
+    end
+
+    get '/sources/*/events/*' do
+      identifier, event_name = params[:splat]
     end
 
     get '/sources/:identifier' do |identifier|

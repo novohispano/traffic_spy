@@ -12,8 +12,10 @@ gem 'sqlite3'
 gem 'yajl-ruby'
 
 group :development do
+  gem 'simplecov'
   gem 'rspec'
   gem 'guard-rspec'
+  gem 'rb-fsevent'
   gem 'shotgun'
   gem 'debugger'
   gem 'simplecov'
