@@ -40,8 +40,8 @@
 
     def self.urls(actions)
       urls = Hash.new(0)
-      actions.map{|action| urls[Url.find(id: action.url_id).url] += 1}
-      urls.sort_by {|k,v| -v}
+      actions.map{|action| urls[Url.find(id: action.url_id).path] += 1}
+      urls
     end
 
     def self.find_all_by_identifier(identifier)

@@ -1,5 +1,7 @@
 module TrafficSpy
   class Source
+    extend Finder
+    
     attr_reader :id, 
                 :identifier, 
                 :root_url,

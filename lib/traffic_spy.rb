@@ -10,7 +10,6 @@ require "debugger"
 require "./lib/traffic_spy/db/schema"
 require "./lib/traffic_spy/models/init"
 
-
 module TrafficSpy
   class AppServer < Sinatra::Base
 
@@ -20,7 +19,7 @@ module TrafficSpy
     end
 
     get '/sources/:identifier' do |identifier|
-      @source = identifier
+      @source = {:identifier => identifier, :root_url => Source.find(:identifier => identifier).root_url}
       @actions = Action.find_all_by_identifier(identifier)
       @urls = Action.urls(@actions)
       erb :sources_data, :layout => :main_layout
