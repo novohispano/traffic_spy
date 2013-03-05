@@ -41,8 +41,8 @@ unless DB.table_exists?(:urls)
   end
 end
 
-unless DB.table_exists?(:user_agents)
-  DB.create_table :user_agents do
+unless DB.table_exists?(:agents)
+  DB.create_table :agents do
     primary_key :id
     String      :operating_system
     String      :browser

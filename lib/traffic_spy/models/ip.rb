@@ -1,28 +1,29 @@
 module TrafficSpy
   class IP
-    def self.find_or_create(address)
-      if IP.exists?(address)
-        IP.find_by_address(address)[:id]
-      else
-        IP.register(address)
-        IP.find_by_address(address)[:id]
-      end
+    extend Finder
+
+    attr_reader :id,
+                :address,
+                :created_at,
+                :updated_at
+
+    def initialize(params)
+      @id         = params[:id]
+      @address    = params[:address]
+      @created_at = params[:created_at]
+      @updated_at = params[:updated_at]
     end
 
-    def self.exists?(address)
-      IP.find_by_address(address).to_a.count > 0
+    def self.table
+      DB.from(:ips)
     end
 
     def self.register(address)
-      DB.from(:ips).insert(
-        :address => address,
+      table.insert(
+        :address    => address,
         :created_at => Time.now,
         :updated_at => Time.now
         )
-    end
-
-    def self.find_by_address(address)
-      DB.from(:ips).where(:address => address).to_a[0]
     end
   end
 end

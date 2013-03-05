@@ -1,11 +1,17 @@
 module TrafficSpy
   class Source
-    attr_reader :id, :identifier, :root_url
+    attr_reader :id, 
+                :identifier, 
+                :root_url,
+                :created_at,
+                :updated_at
 
     def initialize(params)
-      @id = params[:id]
+      @id         = params[:id]
       @identifier = params[:identifier]
-      @root_url = params[:root_url]
+      @root_url   = params[:root_url]
+      @created_at = params[:created_at]
+      @updated_at = params[:updated_at]
     end
 
     def self.table
@@ -41,7 +47,7 @@ module TrafficSpy
     def self.register(params)
       table.insert(
         :identifier => params[:identifier],
-        :root_url => params[:rootUrl],
+        :root_url   => params[:rootUrl],
         :created_at => Time.now,
         :updated_at => Time.now
         )
