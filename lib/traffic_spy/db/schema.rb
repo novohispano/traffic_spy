@@ -36,6 +36,8 @@ unless DB.table_exists?(:urls)
   DB.create_table :urls do
     primary_key :id
     String      :url
+    String      :host
+    String      :path
     DateTime    :created_at
     DateTime    :updated_at
   end
