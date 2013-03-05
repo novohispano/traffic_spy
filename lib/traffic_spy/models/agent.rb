@@ -1,6 +1,7 @@
 module TrafficSpy
   class Agent
     extend Finder
+    
     attr_reader :id,
                 :operating_system,
                 :browser,

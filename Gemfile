@@ -16,6 +16,7 @@ group :development do
   gem 'guard-rspec'
   gem 'shotgun'
   gem 'debugger'
+  gem 'simplecov'
 end
 
 group :evaluations do

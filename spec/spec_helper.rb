@@ -4,6 +4,8 @@
 # loaded once.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+require 'simplecov'
+SimpleCov.start
 require 'traffic_spy'
 
 RSpec.configure do |config|
@@ -24,5 +26,3 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = 'random'
 end
-
-

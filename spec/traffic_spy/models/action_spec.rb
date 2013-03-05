@@ -18,12 +18,14 @@ module TrafficSpy
         }}
 
       it ".create" do
+        pending
         identifier = "jumpstartlab"
         Action.create(identifier, :payload)
         expect(Action.exists?(:payload)).to eq true
       end
 
-      it ".exists?" do 
+      it ".exists?" do
+        pending
         identifier = "blair"
         expect(Action.exists?(:payload)).to eq true
       end
