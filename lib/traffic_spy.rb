@@ -15,28 +15,41 @@ module TrafficSpy
 
     get '/' do
       @sources = Source.all
-      erb :index, :layout => :main_layout
+      erb :index
     end
 
     get '/sources/:identifier' do |identifier|
-      @source = {:identifier => identifier, :root_url => Source.find(:identifier => identifier).root_url}
-      @actions = Action.find_all_by_identifier(identifier)
-      @urls = Action.urls(@actions)
-      erb :sources_data, :layout => :main_layout
+      pass unless Source.exists?(:identifier => identifier)
+      @source            = Source.find(:identifier => identifier)
+      @actions           = Action.find_all_by_identifier(identifier)
+      @urls              = Action.urls(@actions)
+      @browsers          = Action.browsers(@actions)
+      @operating_systems = Action.operating_systems(@actions)
+      @resolutions       = Action.resolutions(@actions)
+      @url_response      = Action.response_times(@actions)
+      @events            = Action.events(@actions)
+      erb :sources_data
+    end
+
+    get '/sources/:identifier' do |identifier|
+      "#{identifier} does not exist!"
     end
 
     get '/sources/*/urls/*' do 
       @params = params
-      erb :urls, :layout => :main_layout
+      erb :urls
     end
 
     post '/sources' do
       if Source.exists?(params)
-        output = {:code => 403, :message => "Identifier already exists!"}
+        output = {:code    => 403, 
+                  :message => "Identifier already exists!"}
       elsif Source.create(params)
-        output = {:code => 200, :message => "#{{:identifier => params[:identifier]}.to_json}"}
+        output = {:code    => 200, 
+                  :message => "#{{:identifier => params[:identifier]}.to_json}"}
       else
-        output = {:code => 400, :message => "Bad Request! missing required parameters"}
+        output = {:code    => 400, 
+                  :message => "Bad Request! missing required parameters"}
       end
       status output[:code]
       body output[:message]
@@ -44,15 +57,18 @@ module TrafficSpy
 
     post '/sources/:identifier/data' do |identifier|
       if params["payload"] == nil || params["payload"] == ''
-        output = {:code => 400, :message => "Bad Request! missing payload"}
+        output = {:code    => 400, 
+                  :message => "Bad Request! missing payload"}
       else
         json = StringIO.new(params["payload"])
         parser = Yajl::Parser.new
         payload = parser.parse(json)
         if Action.exists?(payload)
-          output = {:code => 403, :message => "Request payload already received."}
+          output = {:code    => 403,
+                    :message => "Request payload already received."}
         else Action.create(identifier, payload)
-          output = {:code => 200, :message => "OK"}
+          output = {:code    => 200, 
+                    :message => "OK"}
         end
       end
       status output[:code]

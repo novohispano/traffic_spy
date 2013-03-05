@@ -1,75 +1,56 @@
-<h1><%= @source[:identifier] %> Statistics</h1>
-<div class="">
-  <h3>All Actions for <%= @source[:identifier] %></h3>
-    <ul class="unstyled">
-      <% @actions.each do |action| %>
-        <li><%= action.id %></li>
-      <% end %>
-    </ul>
-</div>
+<h1><%= @source.identifier %> Statistics</h1>
 
 <div>
   <h4>URL Breakdown</h4>
   <p>Most requested URLS to least requested URLS (url)</p>
     <% @urls.sort_by {|k,v| -v}.each do |path,request_count| %>
-      <div>path: <a href="/sources/<%= @source[:identifier] %>/urls<%= path %>"><%= @source[:root_url] %><%= path %></a></div>
+      <div>path: <a href="/sources/<%= @source.identifier %>/urls<%= path %>"><%= @source.root_url %><%= path %></a></div>
       <div>count: <%= request_count %></div>
     <% end %>
 </div>
-<div class="span6" id="bar-example" style="height:300px;"></div>
+<div class="span6 pull-right" id="bar-example" style="height:300px;"></div>
 
 <div>
   <h4>Browser Breakdown</h4>
   <p>Web browser breakdown across all requests (userAgent)</p>
-  <%# source.browsers.each do |browser,count| %>
-    <div>browser: <%# browser.name %></div>
-    <div>count: <%# browser.request_count %></div>
-  <%# end %>
+  <% @browsers.sort_by {|k,v| -v}.each do |browser,count| %>
+    <div>browser: <%= browser %></div>
+    <div>count: <%= count %></div>
+  <% end %>
 </div>
 
 <div>
   <h4>OS Breakdown</h4>
   <p>OS breakdown across all requests (userAgent)</p>
-  <%# operating_systems.each do |os,count| %>
-    <div>os: <%# os %></div>
-    <div>count: <%# count %></div>
-  <%# end %>
+  <% @operating_systems.sort_by {|k,v| -v}.each do |os,count| %>
+    <div>os: <%= os %></div>
+    <div>count: <%= count %></div>
+  <% end %>
 </div>
 
 <div>
   <h4>Resolution Breakdown</h4>
   <p>Screen Resolution across all requests (Width x Height)</p>
-  <%# resolutions.each do |resolution, count| %>
-    <div>resolution: <%# resolution %></div>
-    <div>count: <%# count %></div>
-  <%# end %>
+  <% @resolutions.sort_by {|k,v| -v}.each do |resolution, count| %>
+    <div>resolution: <%= resolution %></div>
+    <div>count: <%= count %></div>
+  <% end %>
 </div>
 
 <div>
   <h4>Average Response Time</h4>
   <p>Longest average response time per URL to shortest</p>
-  <%# @url_response do |url| %>
-    <div>path:  <%# link_to url.path, url %></div>
-    <div>average response: <%# url.average_response %></div>
-  <%# end %>
+  <% @url_response.sort_by {|k,v| -v}.each do |url, avg_time| %>
+    <div>path:  <%= url %></div>
+    <div>average response: <%= avg_time.to_s[0..4] %>ms</div>
+  <% end %>
 </div>
 
 <div>
-  <h4></h4>
-  <p>Hyperlinks of each url to view url specific data</p>
+  <h4>Events</h4>
+  <p><a href="/sources/<%= @source.identifier %>/events">View Aggregate Event Data</a></p>
 </div>
 
-<div>
-  <h4></h4>
-  <p>Hyperlink to view aggregate event data</p>
-</div>
-
-<div>
-  <h4></h4>
-  <p>Events: <%# "Events", source.events_url %></p>
-</div>
-
-<%# @urls.map{|each| {url: each[0], count: each[1]} %>
   
 <script>Morris.Bar({
   element: 'bar-example',
