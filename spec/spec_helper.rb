@@ -5,7 +5,10 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'simplecov'
-SimpleCov.start
+SimpleCov.start do 
+  add_filter "/spec/"
+  add_filter "/db/"
+end
 require 'traffic_spy'
 
 RSpec.configure do |config|

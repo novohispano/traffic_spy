@@ -75,9 +75,17 @@ module TrafficSpy
       expect(result["socialLogin"]).to eq 1
     end
 
-    it "should return a hash of event data grouped by hour." do 
+    it "should return a hash of event data grouped by hour" do 
       Action.create("jumpstartlab", payload)
-      
+      actions = Action.all
+      result = Action.hour_by_hour(actions)
+      expect(result[20]).to eq 1
+    end
+
+    it "should find all actions related to an attribute" do
+      Action.create("jumpstartlab", payload)
+      inspect = Action.find_all(:responded_in => 1000).first
+      expect(inspect.requested_at.to_s).to eq "2033-02-16 21:38:28 -0700"
     end
   end
 end
