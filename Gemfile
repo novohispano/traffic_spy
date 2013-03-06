@@ -10,6 +10,7 @@ gem 'json'
 gem 'useragent'
 gem 'sqlite3'
 gem 'yajl-ruby'
+gem 'rake'
 
 group :development do
   gem 'simplecov'
@@ -20,6 +21,10 @@ group :development do
   gem 'shotgun'
   gem 'debugger'
   gem 'simplecov'
+  gem 'cane'
+  gem 'rack-test'
+  gem 'reek'
+
 end
 
 group :evaluations do

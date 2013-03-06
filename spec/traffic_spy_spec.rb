@@ -1,20 +1,22 @@
 require 'spec_helper'
+require 'rack/test'
 
 module TrafficSpy
   describe "traffic_spy" do
     context "parsing the JSON" do 
       params = {
-        "url"=>               "http://jorgedropsdatable.com/blog",
-        "requestedAt"=>       "2013-02-16 21:38:28 -0700",
-        "respondedIn"=>        37,
-        "referredBy"=>        "http://jorgedropsdatable.com",
-        "requestType"=>       "GET",
-        "parameters"=>         [],
-        "eventName"=>         "socialLogin",
-        "userAgent"=>         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17",
-        "resolutionWidth"=>   "1920",
-        "resolutionHeight"=>  "1280",
-        "ip"=>                "63.29.38.211"}.to_json
+        "url"              => "http://jorgedropsdatable.com/blog",
+        "requestedAt"      => "2013-02-16 21:38:28 -0700",
+        "respondedIn"      => 37,
+        "referredBy"       => "http://jorgedropsdatable.com",
+        "requestType"      => "GET",
+        "parameters"       => [],
+        "eventName"        => "socialLogin",
+        "userAgent"        => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17",
+        "resolutionWidth"  => "1920",
+        "resolutionHeight" => "1280",
+        "ip"               => "63.29.38.211"}.to_json
+
       json = StringIO.new(params)
       parser = Yajl::Parser.new
       payload = parser.parse(json)
@@ -38,7 +40,19 @@ module TrafficSpy
       it "should have user agent" do 
         expect(payload["userAgent"]).to eq "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17"
       end
+    end
 
+    context "router/controller" do
+      include Rack::Test::Methods
+
+      def app
+        Sinatra::Application
+      end
+
+      it "shows the homepage" do
+        get '/'
+        last_response.should.be.ok
+      end
     end
   end
 end

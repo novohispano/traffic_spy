@@ -1,8 +1,8 @@
   module TrafficSpy
-  class Action 
+  class Action
     extend Finder
-    
-    attr_reader :id, 
+
+    attr_reader :id,
                 :source_id,
                 :url_id,
                 :requested_at,
@@ -37,13 +37,13 @@
     end
 
     def self.urls(actions)
-      actions.each_with_object(Hash.new(0)) do |action, urls| 
+      actions.each_with_object(Hash.new(0)) do |action, urls|
         urls[Url.find(id: action.url_id).path] += 1
       end
     end
 
     def self.browsers(actions)
-      actions.each_with_object(Hash.new(0)) do |action, browsers| 
+      actions.each_with_object(Hash.new(0)) do |action, browsers|
         browsers[Agent.find(id: action.user_agent_id).browser] += 1
       end
     end
@@ -82,26 +82,26 @@
         events[Event.find(id: action.event_id).name] += 1
       end
     end
-   
+
     def self.hour_by_hour(actions)
       actions.each_with_object(Hash.new(0)) do |action, events|
         events[action.created_at.hour] += 1
       end
     end
 
-    def self.create(identifier, payload)
+    def self.create(identifier, load)
       table.insert(
         :source_id     => Source.find(:identifier => identifier).id,
-        :url_id        => Url.find_or_create("url", payload["url"]),
-        :requested_at  => payload["requestedAt"],
-        :responded_in  => payload["respondedIn"],
-        :referrer_id   => Referrer.find_or_create("url", payload["referredBy"]),
-        :request_type  => payload["requestType"],
-        :event_id      => Event.find_or_create("name", payload["eventName"]),
-        :user_agent_id => Agent.find_or_create(payload["userAgent"]),
-        :resolution_id => Resolution.find_or_create(payload["resolutionWidth"], 
-                                                    payload["resolutionHeight"]),
-        :ip_id         => IP.find_or_create("address", payload["ip"]),
+        :url_id        => Url.find_or_create("url", load["url"]),
+        :requested_at  => load["requestedAt"],
+        :responded_in  => load["respondedIn"],
+        :referrer_id   => Referrer.find_or_create("url", load["referredBy"]),
+        :request_type  => load["requestType"],
+        :event_id      => Event.find_or_create("name", load["eventName"]),
+        :user_agent_id => Agent.find_or_create(load["userAgent"]),
+        :resolution_id => Resolution.find_or_create(load["resolutionWidth"],
+                                                    load["resolutionHeight"]),
+        :ip_id         => IP.find_or_create("address", load["ip"]),
         :created_at    => Time.now,
         :updated_at    => Time.now
         )

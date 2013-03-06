@@ -38,7 +38,8 @@ module TrafficSpy
 
     get '/sources/*/events/*' do
       identifier, event_name = params[:splat]
-      "<h1>Sorry, event '#{event_name}' does not exist. Go back to <a href='/sources/#{identifier}/events'>#{identifier} events</a></h1>"
+      %{<h1>Sorry, event '#{event_name}' does not exist. Go back to
+       <a href='/sources/#{identifier}/events'>#{identifier} events</a></h1>}
     end
 
     get '/sources/:identifier' do |identifier|
@@ -58,7 +59,7 @@ module TrafficSpy
       "#{identifier} does not exist!"
     end
 
-    get '/sources/*/urls/*' do 
+    get '/sources/*/urls/*' do
       identifier, path = params[:splat]
       pass              unless Source.exists?(:identifier => identifier)
       @source           = Source.find(:identifier=> identifier)
@@ -69,19 +70,19 @@ module TrafficSpy
       erb :urls
     end
 
-    get '/sources/*/urls/*' do 
+    get '/sources/*/urls/*' do
       "URL not Requested, go back to your home"
     end
 
     post '/sources' do
       if Source.exists?(:identifier => params[:identifier])
-        output = {:code    => 403, 
+        output = {:code    => 403,
                   :message => "Identifier already exists!"}
       elsif Source.create(params)
-        output = {:code    => 200, 
+        output = {:code    => 200,
                   :message => "#{{:identifier => params[:identifier]}.to_json}"}
       else
-        output = {:code    => 400, 
+        output = {:code    => 400,
                   :message => "Bad Request! missing required parameters"}
       end
       status output[:code]
@@ -90,7 +91,7 @@ module TrafficSpy
 
     post '/sources/:identifier/data' do |identifier|
       if params["payload"] == nil || params["payload"] == ''
-        output = {:code    => 400, 
+        output = {:code    => 400,
                   :message => "Bad Request! missing payload"}
       else
         json = StringIO.new(params["payload"])
@@ -100,7 +101,7 @@ module TrafficSpy
           output = {:code    => 403,
                     :message => "Request payload already received."}
         else Action.create(identifier, payload)
-          output = {:code    => 200, 
+          output = {:code    => 200,
                     :message => "OK"}
         end
       end

@@ -77,9 +77,9 @@ module TrafficSpy
 
     it "should return a hash of event data grouped by hour" do 
       Action.create("jumpstartlab", payload)
-      actions = Action.all
+      actions = Action.find_all(:responded_in => 1000)
       result = Action.hour_by_hour(actions)
-      expect(result[20]).to eq 1
+      expect(result.collect { |k, v| v }).to eq [1]
     end
 
     it "should find all actions related to an attribute" do
