@@ -41,13 +41,6 @@ module TrafficSpy
         :updated_at => Time.now
         )
     end
-<<<<<<< HEAD
 
-    def self.find_by_resolution(width, height)
-      table.where(:width  => width.to_s, 
-                  :height => height.to_s).to_a[0]
-    end
-=======
->>>>>>> master
   end
 end
