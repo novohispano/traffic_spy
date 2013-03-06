@@ -68,7 +68,7 @@ module TrafficSpy
       expect(result["6000 x 9000"]).to eq 1
     end
 
-    it "should retunr all the events associated with this action" do
+    it "should return all the events associated with this action" do
       Action.create("jumpstartlab", payload)
       actions = Action.all
       result = Action.events(actions)

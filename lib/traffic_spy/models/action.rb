@@ -74,7 +74,7 @@
         Url.find(:id => action.url_id).url
       end
       response_hash = Hash.new([])
-      count.collect do |url,actions|
+      count.collect do |url, actions|
         resp = actions.collect do |action|
           action.responded_in
         end
