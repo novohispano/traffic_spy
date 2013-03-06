@@ -4,7 +4,7 @@ puts "Connecting to Postgres... #{Time.now}"
 DB = Sequel.connect("postgres://localhost/traffic_spy")
 puts "Connected to DB successfully!"
 
-unless DB.table_exists?(:actions) 
+unless DB.table_exists?(:actions)
   DB.create_table :actions do
     primary_key :id
     foreign_key :source_id
@@ -23,7 +23,7 @@ unless DB.table_exists?(:actions)
 end
 
 unless DB.table_exists?(:sources)
-  DB.create_table :sources do 
+  DB.create_table :sources do
     primary_key :id
     String      :identifier
     String      :root_url
@@ -32,7 +32,7 @@ unless DB.table_exists?(:sources)
   end
 end
 
-unless DB.table_exists?(:urls) 
+unless DB.table_exists?(:urls)
   DB.create_table :urls do
     primary_key :id
     String      :url
@@ -72,7 +72,7 @@ unless DB.table_exists?(:ips)
   end
 end
 
-unless DB.table_exists?(:referrers) 
+unless DB.table_exists?(:referrers)
   DB.create_table :referrers do
     primary_key :id
     String      :url
@@ -90,7 +90,7 @@ unless DB.table_exists?(:events)
   end
 end
 
-unless DB.table_exists?(:campaigns) 
+unless DB.table_exists?(:campaigns)
   DB.create_table :campaigns do
     primary_key :id
     String      :name

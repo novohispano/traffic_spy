@@ -1,7 +1,7 @@
 module TrafficSpy
   class Agent
     extend Finder
-    
+
     attr_reader :id,
                 :operating_system,
                 :browser,
@@ -35,7 +35,7 @@ module TrafficSpy
     end
 
     def self.exists?(agent)
-      true if self.find_agents(agent).count > 0 
+      true if self.find_agents(agent).count > 0
     end
 
     def self.register(agent)

@@ -20,7 +20,7 @@ module TrafficSpy
 
     def self.register(url)
       table.insert(
-        :url => url, 
+        :url => url,
         :created_at => Time.now,
         :updated_at => Time.now
         )

@@ -1,7 +1,7 @@
 module TrafficSpy
   class Resolution
     extend Finder
-    
+
     attr_reader :id,
                 :width,
                 :height,
