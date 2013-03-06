@@ -96,8 +96,8 @@ module TrafficSpy
         output = {:code    => 400,
                   :message => "Bad Request! missing payload"}
       else
-        json = StringIO.new(params["payload"])
-        parser = Yajl::Parser.new
+        json    = StringIO.new(params["payload"])
+        parser  = Yajl::Parser.new
         payload = parser.parse(json)
         if Action.exists?(:requested_at => payload["requestedAt"])
           output = {:code    => 403,
