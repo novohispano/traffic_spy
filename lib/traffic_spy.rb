@@ -30,8 +30,9 @@ module TrafficSpy
       identifier, event_name = params[:splat]
       pass unless Source.exists?(:identifier => identifier)
       pass unless Event.exists?(:name => event_name)
-      event_id = Event.find(:name => event_name)
-      @events  = Action.find_all(:event_id => event_id)
+      @event = Event.find(:name => event_name)
+      @actions  = Action.find_all(:event_id => @event.id)
+      @events = Action.hour_by_hour(@actions)
       erb :event_show
     end
 
