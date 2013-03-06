@@ -43,7 +43,7 @@ module TrafficSpy
     get '/sources/:identifier' do |identifier|
       pass unless Source.exists?(:identifier => identifier)
       @source            = Source.find(:identifier => identifier)
-      @actions           = Action.find_all_by_identifier(identifier)
+      @actions           = Action.find_all(:source_id => @source.id)
       @urls              = Action.urls(@actions)
       @browsers          = Action.browsers(@actions)
       @operating_systems = Action.operating_systems(@actions)
