@@ -91,11 +91,6 @@
       end
       events
     end
-
-    def self.find_all_by_identifier(params)
-      id = Source.find(:identifier => params["identifier"])
-      table.where(:source_id => id).map{ |row| Action.new(row) }
-    end
    
     def self.create(identifier, payload)
       table.insert(

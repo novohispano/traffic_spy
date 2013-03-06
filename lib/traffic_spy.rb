@@ -21,7 +21,7 @@ module TrafficSpy
     get '/sources/:identifier/events' do |identifier|
       pass unless Source.exists?(:identifier => identifier)
       @source       = Source.find(:identifier => identifier)
-      @actions      = Action.find_all_by_identifier(identifier)
+      @actions      = Action.find_all(:source_id => @source.id)
       @events       = Action.events(@actions)
       erb :event_index
     end
@@ -31,7 +31,7 @@ module TrafficSpy
       pass unless Source.exists?(:identifier => identifier)
       pass unless Event.exists?(:name => event_name)
       event_id = Event.find(:name => event_name)
-      @events = Action.find_all(:event_id => event_id)
+      @events  = Action.find_all(:event_id => event_id)
       erb :event_show
     end
 
