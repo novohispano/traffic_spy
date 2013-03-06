@@ -51,7 +51,7 @@ module TrafficSpy
       @resolutions       = Action.resolutions(@actions)
       @url_response      = Action.response_times(@actions)
       @events            = Action.events(@actions)
-      erb :sources_data
+      erb :sources_index
     end
 
     get '/sources/:identifier' do |identifier|
