@@ -74,5 +74,10 @@ module TrafficSpy
       result = Action.events(actions)
       expect(result["socialLogin"]).to eq 1
     end
+
+    it "should return a hash of event data grouped by hour." do 
+      Action.create("jumpstartlab", payload)
+      
+    end
   end
 end

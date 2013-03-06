@@ -92,6 +92,14 @@
       events
     end
    
+    def self.hour_by_hour(actions)
+      events = Hash.new(0)
+      actions.collect do |action|
+        events[action.created_at.hour] += 1
+      end
+      events
+    end
+
     def self.create(identifier, payload)
       table.insert(
         :source_id     => Source.find(:identifier => identifier).id,

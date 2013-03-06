@@ -1,5 +1,6 @@
 <div class="container">
-  <% @events.each |action| %>
-    <%= "#{action.event_id} #{action.responded_in}" %>
+  <h1><%= @event.name %>| <%= @event.id %></h1>
+  <% @events.each do |hour, count| %>
+    <h2>Hour: <%= hour %>:00 Event count: <%= count %></h2>
   <% end %>
 </div>
