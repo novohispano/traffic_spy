@@ -37,44 +37,33 @@
     end
 
     def self.urls(actions)
-      urls = Hash.new(0)
-      actions.collect do |action| 
+      actions.each_with_object(Hash.new(0)) do |action, urls| 
         urls[Url.find(id: action.url_id).path] += 1
       end
-      urls
     end
 
     def self.browsers(actions)
-      browsers = Hash.new(0)
-      actions.collect do |action| 
+      actions.each_with_object(Hash.new(0)) do |action, browsers| 
         browsers[Agent.find(id: action.user_agent_id).browser] += 1
       end
-      browsers
     end
 
     def self.operating_systems(actions)
-      os = Hash.new(0)
-      actions.collect do |action|
+      actions.each_with_object(Hash.new(0)) do |action, os|
         os[Agent.find(id: action.user_agent_id).operating_system] += 1
       end
-      os
     end
 
     def self.resolutions(actions)
-      resolutions = Hash.new(0)
-      actions.collect do |action|
+      actions.each_with_object(Hash.new(0)) do |action, resolutions|
         res = Resolution.find(id: action.resolution_id)
         resolutions["#{res.width} x #{res.height}"] += 1
       end
-      resolutions
     end
 
     def self.response_times(actions)
-      count = actions.group_by do |action| 
-        Url.find(:id => action.url_id).url
-      end
       response_hash = Hash.new([])
-      count.collect do |url, actions|
+      group_actions(actions).collect do |url, actions|
         resp = actions.collect do |action|
           action.responded_in
         end
@@ -84,20 +73,20 @@
       response_hash
     end
 
+    def self.group_actions(actions)
+      actions.group_by{ |action| Url.find(:id => action.url_id).url }
+    end
+
     def self.events(actions)
-      events = Hash.new(0)
-      actions.collect do |action|
+      actions.each_with_object(Hash.new(0)) do |action, events|
         events[Event.find(id: action.event_id).name] += 1
       end
-      events
     end
    
     def self.hour_by_hour(actions)
-      events = Hash.new(0)
-      actions.collect do |action|
+      actions.each_with_object(Hash.new(0)) do |action, events|
         events[action.created_at.hour] += 1
       end
-      events
     end
 
     def self.create(identifier, payload)
