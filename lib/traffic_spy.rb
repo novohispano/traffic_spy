@@ -28,11 +28,13 @@ module TrafficSpy
 
     get '/sources/*/events/*' do
       identifier, event_name = params[:splat]
-      pass unless Source.exists?(:identifier => identifier)
-      pass unless Event.exists?(:name => event_name)
-      @event    = Event.find(:name => event_name)
-      @actions  = Action.find_all(:event_id => @event.id)
-      @events   = Action.hour_by_hour(@actions)
+      pass     unless Source.exists?(:identifier => identifier)
+      @source  = Source.find(:identifier => identifier)
+      pass     unless Event.exists?(:name => event_name)
+      @event   = Event.find(:name => event_name)
+      actions  = Action.find_all(:source_id => @source.id)
+      @actions = actions.select{|action| action.event_id == @event.id}
+      @events  = Action.hour_by_hour(@actions)
       erb :event_show
     end
 
