@@ -1,9 +1,0 @@
-<div class="container">
-  <h3>Currently viewing <a href="/sources/<%= @source.identifier %>"><%= @source.identifier %></a> stats for: "<%= @path %>"</h3>
-    <h2>Response Time, Longest to Shortest</h2>
-    <ul>
-      <% @actions.collect { |action| action.responded_in }.sort.reverse.each do |time| %>
-      <li><%= time %>ms</li>
-      <% end %>
-    </ul>
-</div>

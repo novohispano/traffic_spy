@@ -27,15 +27,39 @@
 <hr />
   
   <div class="row">
-    <h4>Events</h4>
-    <p><a href="/sources/<%= @source.identifier %>/events">View Aggregate Event Data</a></p>
+    <h4>Average Response Time</h4>
+    <div class="span5">
+      <div id="response_time_breakdown" height="100%"></div>
+    </div>
+    <div class="span5">
+      <p>Longest average response time per URL to shortest</p>
+      <table class="table table-hover table-bordered">
+        <tr>
+          <th>Path</th>
+          <th>Average Response</th>
+        </tr>
+        <% @url_response.sort_by {|k,v| -v}.each do |url, avg_time| %>
+          <tr>
+            <td><%= url %></td>
+            <td><%= avg_time.to_s[0..4] %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
   </div>
-
+<!-- 
 <hr />
   
   <div class="row">
+    <h4>Events</h4>
+    <p><a href="/sources/<%= @source.identifier %>/events">View Aggregate Event Data</a></p>
+  </div>
+ -->
+<hr />
+  
+  <div class="row">
+    <h4>Browser Breakdown</h4>
     <div class="span5">
-      <h4>Browser Breakdown</h4>
       <p>Web browser breakdown across all requests (userAgent)</p>
       <% @browsers.sort_by {|k,v| -v}.each do |browser,count| %>
         <div>browser: <%= browser %></div>
@@ -43,14 +67,14 @@
       <% end %>
     </div>
     <div class="span5">
-      chart goes here
+      <p></p>
     </div>
   </div>
 
 <hr />
   <div class="row">
+    <h4>OS Breakdown</h4>
     <div class="span5">
-      <h4>OS Breakdown</h4>
       <p>OS breakdown across all requests (userAgent)</p>
       <% @operating_systems.sort_by {|k,v| -v}.each do |os,count| %>
         <div>os: <%= os %></div>
@@ -58,14 +82,14 @@
       <% end %>
     </div>
     <div class="span5">
-      another chart goes here
+      <p></p>
     </div>
   </div>
 <hr />
   
   <div class="row">
+    <h4>Resolution Breakdown</h4>
     <div class="span5">
-      <h4>Resolution Breakdown</h4>
       <p>Screen Resolution across all requests (Width x Height)</p>
       <% @resolutions.sort_by {|k,v| -v}.each do |resolution, count| %>
         <div>resolution: <%= resolution %></div>
@@ -73,22 +97,7 @@
       <% end %>
     </div>
     <div class="span5">
-      chart goes here
-    </div>
-  </div>
-
-<hr />
-  
-  <div class="row">
-    <div class="span5">
-    <h4>Average Response Time</h4>
-    <p>Longest average response time per URL to shortest</p>
-    <% @url_response.sort_by {|k,v| -v}.each do |url, avg_time| %>
-      <div>path:  <%= url %></div>
-      <div>average response: <%= avg_time.to_s[0..4] %>ms</div>
-    <% end %>
-  </div>
-    <div class="span5">
+      <p></p>
     </div>
   </div>
 
@@ -108,4 +117,19 @@
   xkey: 'y',
   ykeys: ['a'],
   labels: ['Traffic']
+});</script>
+<script>Morris.Bar({
+  element: 'response_time_breakdown',
+  data: [
+   <% @url_response.sort_by {|k,v| -v}.each_with_index do |(url, avg_time), index| %>
+    <% if index == @url_response.count - 1 %> 
+      {y: "<%= url %>", a: <%= avg_time %>}
+    <% else %>
+      {y: "<%= url %>", a: <%= avg_time %>},
+    <% end %>
+    <% end %>
+  ],
+  xkey: 'y',
+  ykeys: ['a'],
+  labels: ['Average Response Time']
 });</script>
