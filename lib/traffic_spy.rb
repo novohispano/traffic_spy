@@ -49,7 +49,7 @@ module TrafficSpy
     end
 
     post '/sources' do
-      if Source.exists?(params)
+      if Source.exists?(:identifier => params[:identifier])
         output = {:code    => 403, 
                   :message => "Identifier already exists!"}
       elsif Source.create(params)
@@ -71,7 +71,7 @@ module TrafficSpy
         json = StringIO.new(params["payload"])
         parser = Yajl::Parser.new
         payload = parser.parse(json)
-        if Action.exists?(payload)
+        if Action.exists?(:requested_at => payload["requestedAt"])
           output = {:code    => 403,
                     :message => "Request payload already received."}
         else Action.create(identifier, payload)

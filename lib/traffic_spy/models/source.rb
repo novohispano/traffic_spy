@@ -20,18 +20,6 @@ module TrafficSpy
       DB.from(:sources)
     end
 
-    def self.all
-      table.select.collect{|row| Source.new(row)}
-    end
-
-    def self.find_by_identifier(identifier)
-      table.where(:identifier => identifier).to_a[0][:id]
-    end
-
-    def self.exists?(params)
-      table.where(:identifier => params[:identifier]).to_a.count > 0
-    end
-
     def self.create(params)
       return false if missing_parameters?(params)
       register(params)

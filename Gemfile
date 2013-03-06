@@ -12,6 +12,7 @@ gem 'sqlite3'
 gem 'yajl-ruby'
 
 group :development do
+  gem 'pry'
   gem 'rspec'
   gem 'guard-rspec'
   gem 'shotgun'

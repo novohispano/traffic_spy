@@ -21,16 +21,16 @@ module TrafficSpy
     end
 
     def self.find_or_create(width, height)
-      if self.exists?(width, height)
-        self.find_by_resolution(width, height)[:id]
+      if exists?(width, height)
+        find(:width => width, :height => height).id
       else
-        self.register(width, height)
-        self.find_by_resolution(width, height)[:id]
+        register(width, height)
+        find(:width => width, :height => height).id
       end
     end
 
     def self.exists?(width, height)
-      self.find_by_resolution(width, height).to_a.count > 0
+      find(:width => width, :height => height) != nil
     end
 
     def self.register(width, height)
@@ -40,11 +40,6 @@ module TrafficSpy
         :created_at => Time.now,
         :updated_at => Time.now
         )
-    end
-
-    def self.find_by_resolution(width, height)
-      table.where(:width  => width, 
-                  :height => height).to_a[0]
     end
   end
 end

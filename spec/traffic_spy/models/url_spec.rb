@@ -7,5 +7,6 @@ module TrafficSpy
       instance = Url.find(:url => "http://www.text.com/hello")
       expect(instance.url).to eq "http://www.text.com/hello"
     end
+
   end
 end

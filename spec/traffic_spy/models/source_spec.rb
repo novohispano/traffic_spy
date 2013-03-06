@@ -6,36 +6,37 @@ module TrafficSpy
       let (:subject) { described_class }
       
       describe ".create" do
-        
         context "given bad parameters" do
-          it "it does not save itself" do
-            params = {:identifier => nil }
-            subject.should_receive(:missing_parameters?).and_return(true)
-            subject.create(params)
+          it "should test if it has missing parameters" do
+            params = { :identifier => nil }
+            expect(subject.missing_parameters?(params)).to eq true
           end
-        end
 
-        context "given bad parameters" do
-          it "it does not save itself" do
-            params = {:identifier => nil }
-            subject.should_not_receive(:register)
-            subject.create(params)
+          it "should not register" do
+            params = { :identifier => nil }
+            subject.should_not_receive(:create)
           end
         end
 
         context "when given all the correct parameters" do
-          it "when it does not already exist" do
-            params = {:identifier => "jumpstartlab", :rootUrl => "http://jumpstartlab.com"}
-            subject.should_receive(:register).with(params).and_return(true)
-            subject.create(params)
+          it "should register when it does not exist" do
+            params = { :identifier => "jumpstartlab", :rootUrl => "http://jumpstartlab.com"}
+            record = subject.create(params)
+            expect(record).not_to eq nil
           end
-        end
 
-        context "when given all the correct parameters" do
-          it "when it already exist" do
-            params = {:identifier => "jumpstartlab", :rootUrl => "http://jumpstartlab.com"}
-            subject.exists?(params)
-            subject.should_not_receive(:register)
+          it "should not register when it already exist" do
+            params = { :identifier => "jumpstartlab", :rootUrl => "http://jumpstartlab.com"}
+            subject.create(params)
+            expect(subject.exists?( :identifier => "jumpstartlab")).to eq true
+          end
+
+          it "should register properly" do
+            params = { :identifier => "testlab", :rootUrl => "http://testlab.com"}
+            subject.register(params)
+            instance = subject.find(:identifier => "testlab")
+            expect(instance.identifier).to eq "testlab"
+            expect(instance.root_url).to eq "http://testlab.com"
           end
         end
       end
