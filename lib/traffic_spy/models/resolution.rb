@@ -43,8 +43,8 @@ module TrafficSpy
     end
 
     def self.find_by_resolution(width, height)
-      table.where(:width  => width, 
-                  :height => height).to_a[0]
+      table.where(:width  => width.to_s, 
+                  :height => height.to_s).to_a[0]
     end
   end
 end

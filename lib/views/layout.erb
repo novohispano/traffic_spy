@@ -57,9 +57,9 @@
   <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
   <link rel="shortcut icon" href="../assets/ico/favicon.png">
 </head>
-<body class="container">
-  <%= erb :header_nav %>
-  <%= yield %>
-  <%= erb :footer %>
+<%= erb :header_nav %>
+<body style="padding-top: 40px;">
+<%= yield %>
+<%= erb :footer %>
 </body>
 </html>

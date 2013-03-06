@@ -1,70 +1,70 @@
-<h1><%= @source.identifier %> Statistics</h1>
+<div class="pull-right" id="bar" style="height:300px;"></div>
+<div class="container">
+  <h1><%= @source.identifier %> Statistics</h1>
+  <div>
+    <h4>URL Breakdown</h4>
+    <p>Most requested URLS to least requested URLS (url)</p>
+      <% @urls.sort_by {|k,v| -v}.each do |path,request_count| %>
+        <div>path: <a href="/sources/<%= @source.identifier %>/urls<%= path %>"><%= @source.root_url %><%= path %></a></div>
+        <div>count: <%= request_count %></div>
+      <% end %>
+  </div>
 
-<div>
-  <h4>URL Breakdown</h4>
-  <p>Most requested URLS to least requested URLS (url)</p>
-    <% @urls.sort_by {|k,v| -v}.each do |path,request_count| %>
-      <div>path: <a href="/sources/<%= @source.identifier %>/urls<%= path %>"><%= @source.root_url %><%= path %></a></div>
-      <div>count: <%= request_count %></div>
+
+  <div>
+    <h4>Browser Breakdown</h4>
+    <p>Web browser breakdown across all requests (userAgent)</p>
+    <% @browsers.sort_by {|k,v| -v}.each do |browser,count| %>
+      <div>browser: <%= browser %></div>
+      <div>count: <%= count %></div>
     <% end %>
-</div>
-<div class="span6 pull-right" id="bar-example" style="height:300px;"></div>
+  </div>
 
-<div>
-  <h4>Browser Breakdown</h4>
-  <p>Web browser breakdown across all requests (userAgent)</p>
-  <% @browsers.sort_by {|k,v| -v}.each do |browser,count| %>
-    <div>browser: <%= browser %></div>
-    <div>count: <%= count %></div>
-  <% end %>
-</div>
+  <div>
+    <h4>OS Breakdown</h4>
+    <p>OS breakdown across all requests (userAgent)</p>
+    <% @operating_systems.sort_by {|k,v| -v}.each do |os,count| %>
+      <div>os: <%= os %></div>
+      <div>count: <%= count %></div>
+    <% end %>
+  </div>
 
-<div>
-  <h4>OS Breakdown</h4>
-  <p>OS breakdown across all requests (userAgent)</p>
-  <% @operating_systems.sort_by {|k,v| -v}.each do |os,count| %>
-    <div>os: <%= os %></div>
-    <div>count: <%= count %></div>
-  <% end %>
-</div>
+  <div>
+    <h4>Resolution Breakdown</h4>
+    <p>Screen Resolution across all requests (Width x Height)</p>
+    <% @resolutions.sort_by {|k,v| -v}.each do |resolution, count| %>
+      <div>resolution: <%= resolution %></div>
+      <div>count: <%= count %></div>
+    <% end %>
+  </div>
 
-<div>
-  <h4>Resolution Breakdown</h4>
-  <p>Screen Resolution across all requests (Width x Height)</p>
-  <% @resolutions.sort_by {|k,v| -v}.each do |resolution, count| %>
-    <div>resolution: <%= resolution %></div>
-    <div>count: <%= count %></div>
-  <% end %>
-</div>
+  <div>
+    <h4>Average Response Time</h4>
+    <p>Longest average response time per URL to shortest</p>
+    <% @url_response.sort_by {|k,v| -v}.each do |url, avg_time| %>
+      <div>path:  <%= url %></div>
+      <div>average response: <%= avg_time.to_s[0..4] %>ms</div>
+    <% end %>
+  </div>
 
-<div>
-  <h4>Average Response Time</h4>
-  <p>Longest average response time per URL to shortest</p>
-  <% @url_response.sort_by {|k,v| -v}.each do |url, avg_time| %>
-    <div>path:  <%= url %></div>
-    <div>average response: <%= avg_time.to_s[0..4] %>ms</div>
-  <% end %>
+  <div>
+    <h4>Events</h4>
+    <p><a href="/sources/<%= @source.identifier %>/events">View Aggregate Event Data</a></p>
+  </div>
 </div>
-
-<div>
-  <h4>Events</h4>
-  <p><a href="/sources/<%= @source.identifier %>/events">View Aggregate Event Data</a></p>
-</div>
-
   
 <script>Morris.Bar({
-  element: 'bar-example',
+  element: 'bar',
   data: [
-    { y: '2006', a: 100 },
-    { y: '2007', a: 75},
-    { y: '2008', a: 50 },
-    { y: '2009', a: 75 },
-    { y: '2010', a: 50 },
-    { y: '2011', a: 75 },
-    { y: '2012', a: 100 }
+   <% @urls.each_with_index do |(path, count), index| %>
+    <% if index == @urls.count - 1 %> 
+      {y: "<%= path %>", a: <%= count.to_i %>}
+    <% else %>
+      {y: "<%= path %>", a: <%= count.to_i %>},
+    <% end %>
+    <% end %>
   ],
   xkey: 'y',
-  ykeys: 'a',
-  labels: 'Series A'
+  ykeys: ['a'],
+  labels: ['Traffic']
 });</script>
-

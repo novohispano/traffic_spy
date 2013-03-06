@@ -1,0 +1,29 @@
+<div class="container">
+  <h1>Currently viewing events for <a href="/sources/<%= @source.identifier %>">
+  <%= @source.identifier %></a></h1>
+
+  <div class="" align="center" id="donut" ></div>
+
+  <div class="span4">
+    <ul>
+      <% @events.each do |event, count| %>
+        <li><%= count %> PageViews: <a href="/sources/<%= @source.identifier %>/events/<%= event %>"><%= event %></a></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<script>
+Morris.Donut({
+  element: 'donut',
+  data: [
+   <% @events.each_with_index do |(event, count), index| %>
+    <% if index == @events.count - 1 %> 
+      {label: "<%= event %>", value: <%= count.to_i %>}
+    <% else %>
+      {label: "<%= event %>", value: <%= count.to_i %>},
+    <% end %>
+    <% end %>
+  ]
+});
+</script>

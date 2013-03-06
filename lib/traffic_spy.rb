@@ -19,14 +19,25 @@ module TrafficSpy
     end
 
     get '/sources/:identifier/events' do |identifier|
+      pass unless Source.exists?(:identifier => identifier)
       @source       = Source.find(:identifier => identifier)
       @actions      = Action.find_all_by_identifier(identifier)
       @events       = Action.events(@actions)
-      erb :events
+      erb :event_index
     end
 
     get '/sources/*/events/*' do
       identifier, event_name = params[:splat]
+      pass unless Source.exists?(:identifier => identifier)
+      pass unless Event.exists?(:name => event_name)
+      event_id = Event.find(:name => event_name)
+      @events = Action.find_all(:event_id => event_id)
+      erb :event_show
+    end
+
+    get '/sources/*/events/*' do
+      identifier, event_name = params[:splat]
+      "<h1>Sorry, event '#{event_name}' does not exist. Go back to <a href='/sources/#{identifier}/events'>#{identifier} events</a></h1>"
     end
 
     get '/sources/:identifier' do |identifier|
@@ -47,7 +58,9 @@ module TrafficSpy
     end
 
     get '/sources/*/urls/*' do 
-      @identifier, path = params[:splat]
+      identifier, path = params[:splat]
+      pass              unless Source.exists?(:identifier => identifier)
+      @source           = Source.find(:identifier=> identifier)
       @path             = path.prepend("/")
       pass              unless Url.exists?(:path => @path)
       url_id            = Url.find(:path => @path).id
@@ -56,7 +69,7 @@ module TrafficSpy
     end
 
     get '/sources/*/urls/*' do 
-      "URL not Requested"
+      "URL not Requested, go back to your home"
     end
 
     post '/sources' do

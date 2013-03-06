@@ -1,4 +1,25 @@
-<div class="container">
-  <a href='/'>home</a>
-  <p>JORGE! Please add a Navigation to the /views/header_nav.erb file.</p>
+      <!-- Fixed navbar -->
+
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="brand" href="/">TrafficSpy</a>
+      <div class="nav-collapse collapse">
+        <ul class="nav">
+          <% if @source %>
+          <li><a href="/sources/<%= @source.identifier %>">
+            <%= @source.identifier.upcase %></a></li>
+          <li><a href="/sources/<%= @source.identifier %>/events">
+              View Events</a></li>
+          <% end %>
+          <li><a href="http://jorge.com/contact">Contact</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
 </div>
