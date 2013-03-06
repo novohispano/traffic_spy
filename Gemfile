@@ -12,11 +12,8 @@ gem 'sqlite3'
 gem 'yajl-ruby'
 
 group :development do
-<<<<<<< HEAD
   gem 'simplecov'
-=======
   gem 'pry'
->>>>>>> master
   gem 'rspec'
   gem 'guard-rspec'
   gem 'rb-fsevent'
