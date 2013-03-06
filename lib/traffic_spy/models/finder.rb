@@ -8,8 +8,12 @@ module TrafficSpy
       table.where(search).collect{ |row| self.new(row) }
     end
 
+    def all
+      table.select.collect{ |row| self.new(row) }
+    end
+
     def exists?(search)
-      table.where(search).to_a.count > 0
+      find(search) != nil
     end
 
     def find_or_create(attribute, value)

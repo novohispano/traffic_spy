@@ -36,10 +36,6 @@
       DB.from(:actions)
     end
 
-    def self.all
-      table.select.collect{|row| Action.new(row)}  
-    end
-
     def self.urls(actions)
       urls = Hash.new(0)
       actions.collect do |action| 
@@ -96,22 +92,14 @@
       events
     end
 
-    def self.find_all_by_identifier(identifier)
-      id = Source.find_by_identifier(identifier)
-      DB.from(:actions).where(:source_id => id).map{ |row| Action.new(row) }
+    def self.find_all_by_identifier(params)
+      id = Source.find(:identifier => params["identifier"])
+      table.where(:source_id => id).map{ |row| Action.new(row) }
     end
-    
-    def self.exists?(payload)
-      true if Action.find_by_payload(payload).count > 0 
-    end
-
-    def self.find_by_payload(payload)
-      DB.from(:actions).where(:requested_at => payload["requestedAt"]).to_a
-    end
-
+   
     def self.create(identifier, payload)
-      DB.from(:actions).insert(
-        :source_id     => Source.find_by_identifier(identifier),
+      table.insert(
+        :source_id     => Source.find(:identifier => identifier).id,
         :url_id        => Url.find_or_create("url", payload["url"]),
         :requested_at  => payload["requestedAt"],
         :responded_in  => payload["respondedIn"],
