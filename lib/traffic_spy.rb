@@ -66,7 +66,7 @@ module TrafficSpy
       pass              unless Url.exists?(:path => @path)
       url_id            = Url.find(:path => @path).id
       @actions          = Action.find_all(:url_id => url_id)
-      erb :urls
+      erb :url_show
     end
 
     get '/sources/*/urls/*' do 
