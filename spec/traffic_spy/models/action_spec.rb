@@ -3,17 +3,17 @@ require 'spec_helper'
 module TrafficSpy
   describe TrafficSpy::Action do
     let (:payload) {{
-      "url"=>    "http://chicken.com/coocoo",
-      "requestedAt"=>       "2033-02-16 21:38:28 -0700",
-      "respondedIn"=>       1000,
-      "referredBy"=>        "http://jumpstartlab.com",
-      "requestType"=>       "TEST",
-      "parameters"=>        [],
-      "eventName"=>         "socialLogin",
-      "userAgent"=>         "Mozilla/5.0; (Testintosh Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Testrome/24.0.1309.0 Testafari/537.17",
-      "resolutionWidth"=>   "6000",
-      "resolutionHeight"=>  "9000",
-      "ip"=>                "123.123.123.123"
+      "url"              => "http://chicken.com/coocoo",
+      "requestedAt"      => "2033-02-16 21:38:28 -0700",
+      "respondedIn"      => 1000,
+      "referredBy"       => "http://jumpstartlab.com",
+      "requestType"      => "TEST",
+      "parameters"       => [],
+      "eventName"        => "socialLogin",
+      "userAgent"        => "Mozilla/5.0; (Testintosh Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Testrome/24.0.1309.0 Testafari/537.17",
+      "resolutionWidth"  => "6000",
+      "resolutionHeight" => "9000",
+      "ip"               => "123.123.123.123"
       }}
 
     it "should return a all response times associated to this action" do 
