@@ -1,6 +1,5 @@
 module TrafficSpy
   class Controller
-
     def self.process_payload(params, identifier)
       if params["payload"] == nil || params["payload"] == ''
         output = {:code    => 400,
@@ -30,6 +29,5 @@ module TrafficSpy
                   :message => "Bad Request! missing required parameters"}
       end
     end
-
   end
 end

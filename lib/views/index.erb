@@ -1,40 +1,43 @@
-<div class="row" style="padding: 40px 40px 40px 135px;">
-  <div class="span3">
-    <h1 style="padding-bottom: 10px;">Sources.</h1>
-    <% @sources.each do |source| %>
-    <p class="lead"><a href="/sources/<%= source.identifier %>">
-      <%= source.identifier %></a></p>
-      <% end %>
+<div id="wrap">
+  <div class="container">
+    <div class="row" style="padding: 40px 40px 40px 135px;">
+      <div class="span3">
+        <h1 style="padding-bottom: 10px;">Sources.</h1>
+        <% @sources.each do |source| %>
+        <p class="lead"><a href="/sources/<%= source.identifier %>">
+          <%= source.identifier %></a></p>
+          <% end %>
+      </div>
+      <div class="span6">
+        <div>
+          <h1 style="padding-bottom: 10px;">Post some data.</h1>
+        </div>
+        <div>
+          <p class="lead">
+            Welcome to TrafficSpy, <br />the web analytics tool developed at gSchool.
+          </p>
+        </div>
+        <div>
+          <p>Register your website.</p>
+        </div>
+        <div>
+          <form action='/sources' method='post'>
+            <fieldset>
+              <div>
+                <input class="input-xlarge span4" type='text' placeholder="identifier" name="identifier"/>
+              </div>
+              <div>
+                <input class="input-xlarge span4" type='text' placeholder="url" name="rootUrl"/>
+              </div>
+              <div>
+                <input type='submit' class='btn btn-primary span4'/>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div id="push"></div>
   </div>
-  <div class="span6">
-    <div>
-      <h1 style="padding-bottom: 10px;">Post some data.</h1>
-    </div>
-    <div>
-      <p class="lead">
-        Welcome to TrafficSpy, <br />the web analytics tool developed at gSchool.
-      </p>
-    </div>
-    <div>
-      <p>Register your website.</p>
-    </div>
-    <div>
-      <form action='/sources' method='post'>
-        <fieldset>
-          <div>
-            <input class="input-xlarge span4" type='text' placeholder="identifier" name="identifier"/>
-          </div>
-          <div>
-            <input class="input-xlarge span4" type='text' placeholder="url" name="rootUrl"/>
-          </div>
-          <div>
-            <input type='submit' class='btn btn-primary span4'/>
-          </div>
-        </fieldset>
-      </form>
-    </div>
-    <div id="myfirstchart" style="height: 250px;"></div>
-  </div>
-<div id="push"></div>
 </div>
 <%= erb :footer %>

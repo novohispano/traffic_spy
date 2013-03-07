@@ -1,94 +1,99 @@
-<div class="row" style="padding: 40px 40px 40px 135px;">
-  <div class="span9">
-    <h1><%= @source.identifier %> statistics.</h1>
-    <div class="row">
+<div id="wrap"
+  <div class="container">
+    <div class="row" style="padding: 40px 40px 40px 135px;">
       <div class="span9">
-        <h3>URL breakdown</h3>
-        <p>Most requested urls.</p>
-        <table class="table table-hover table-bordered table-striped">
+        <h1><%= @source.identifier %> statistics.</h1>
+        <div class="row">
+          <div class="span9">
+            <h3>URL breakdown</h3>
+            <p>Most requested urls.</p>
+            <table class="table table-hover table-bordered table-striped">
+              <tr>
+                <th>Path.</th>
+                <th>Count.</th>
+              </tr>
+              <% @urls.sort_by {|k,v| -v}.each do |path, request_count| %>
+              <tr>
+                <td><a href="/sources/<%= @source.identifier %>/urls<%= path %>"><%= @source.root_url %><%= path %></a></td>
+                <td><%= request_count %></td>
+              </tr>
+              <% end %>
+            </table>
+          </div>
+        </div>
+        <div >
+          <div id="url_breakdown" height="100%"></div>
+        </div>
+      </div>
+      <div class="span9">
+        <h3>Average Response Time</h3>
+        <p>Average response time per URL.</p>
+        <table class="table table table-hover table-bordered table-striped">
           <tr>
             <th>Path.</th>
+            <th>Average response time.</th>
+          </tr>
+          <% @url_response.sort_by {|k,v| -v}.each do |url, avg_time| %>
+          <tr>
+            <td><%= url %></td>
+            <td><%= avg_time.to_s[0..4] %></td>
+          </tr>
+          <% end %>
+        </table>
+        <div>
+          <div id="response_time_breakdown" height="100%"></div>
+        </div>
+      </div>
+      <div class="span9">
+        <h3>Browser Breakdown</h3>
+        <p>Web browser breakdown across all requests.</p>
+        <table class="table table table-hover table-bordered table-striped">
+          <tr>
+            <th>Browser.</th>
             <th>Count.</th>
           </tr>
-          <% @urls.sort_by {|k,v| -v}.each do |path, request_count| %>
+          <% @browsers.sort_by {|k,v| -v}.each do |browser,count| %>
           <tr>
-            <td><a href="/sources/<%= @source.identifier %>/urls<%= path %>"><%= @source.root_url %><%= path %></a></td>
-            <td>count: <%= request_count %></td>
+            <td><%= browser %></td>
+            <td><%= count %></td>
+          </tr>
+          <% end %>
+        </table>
+      </div>
+      <div class="span9">
+        <h3>OS Breakdown</h3>
+        <p>OS breakdown across all requests.</p>
+        <table class="table table table-hover table-bordered table-striped">
+          <tr>
+            <th>OS.</th>
+            <th>Count.</th>
+          </tr>
+          <% @operating_systems.sort_by {|k,v| -v}.each do |os,count| %>
+          <tr>
+            <td><%= os %></td>
+            <td><%= count %></td>
+          </tr>
+          <% end %>
+        </table>
+      </div>
+      <div class="span9">
+        <h3>Resolution Breakdown</h3>
+        <p>Screen Resolution across all requests.</p>
+        <table class="table table table-hover table-bordered table-striped">
+          <tr>
+            <th>Resolution.</th>
+            <th>Count.</th>
+          </tr>
+          <% @resolutions.sort_by {|k,v| -v}.each do |resolution, count| %>
+          <tr>
+            <td><%= resolution %></td>
+            <td><%= count %></td>
           </tr>
           <% end %>
         </table>
       </div>
     </div>
-    <div >
-      <div id="url_breakdown" height="100%"></div>
-    </div>
-  </div>
-  <div class="span9">
-    <h3>Average Response Time</h3>
-    <p>Average response time per URL.</p>
-    <table class="table table table-hover table-bordered table-striped">
-      <tr>
-        <th>Path.</th>
-        <th>Average response time.</th>
-      </tr>
-      <% @url_response.sort_by {|k,v| -v}.each do |url, avg_time| %>
-      <tr>
-        <td><%= url %></td>
-        <td><%= avg_time.to_s[0..4] %></td>
-      </tr>
-      <% end %>
-    </table>
-    <div>
-      <div id="response_time_breakdown" height="100%"></div>
-    </div>
-  </div>
-  <div class="span9">
-    <h3>Browser Breakdown</h3>
-    <p>Web browser breakdown across all requests (userAgent)</p>
-    <table class="table table table-hover table-bordered table-striped">
-      <tr>
-        <th>Browser.</th>
-        <th>Count.</th>
-      </tr>
-      <% @browsers.sort_by {|k,v| -v}.each do |browser,count| %>
-      <tr>
-        <td><%= browser %></td>
-        <td><%= count %></td>
-      </tr>
-      <% end %>
-    </table>
-  </div>
-  <div class="span9">
-    <h3>OS Breakdown</h3>
-    <p>OS breakdown across all requests (userAgent)</p>
-    <table class="table table table-hover table-bordered table-striped">
-      <tr>
-        <th>OS.</th>
-        <th>Count.</th>
-      </tr>
-      <% @operating_systems.sort_by {|k,v| -v}.each do |os,count| %>
-      <tr>
-        <td>OS: <%= os %></td>
-        <td>Count: <%= count %></td>
-      </tr>
-      <% end %>
-    </table>
-  </div>
-  <div class="span9">
-    <h3>Resolution Breakdown</h3>
-    <p>Screen Resolution across all requests (Width x Height)</p>
-    <table class="table table table-hover table-bordered table-striped">
-      <tr>
-        <th>Resolution.</th>
-        <th>Count.</th>
-      </tr>
-      <% @resolutions.sort_by {|k,v| -v}.each do |resolution, count| %>
-      <tr>
-        <td>Resolution: <%= resolution %></td>
-        <td>Count: <%= count %></td>
-      </tr>
-      <% end %>
-    </table>
+    <div id="push"></div>
   </div>
 </div>
 <%= erb :footer %>

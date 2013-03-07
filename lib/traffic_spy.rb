@@ -6,7 +6,6 @@ require "yajl/json_gem"
 require "time"
 require "useragent"
 
-
 require "./lib/traffic_spy/db/schema"
 require "./lib/traffic_spy/models/init"
 require "./lib/controller"
