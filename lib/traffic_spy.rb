@@ -5,7 +5,7 @@ require "sequel"
 require "yajl/json_gem"
 require "time"
 require "useragent"
-require "debugger"
+
 
 require "./lib/traffic_spy/db/schema"
 require "./lib/traffic_spy/models/init"

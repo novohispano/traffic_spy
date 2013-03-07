@@ -8,9 +8,13 @@ gem 'sequel'
 gem 'haml'
 gem 'json'
 gem 'useragent'
-gem 'sqlite3'
 gem 'yajl-ruby'
 gem 'rake'
+
+
+group :production do
+  gem 'thin'
+end
 
 group :development do
   gem 'simplecov'
@@ -19,12 +23,10 @@ group :development do
   gem 'guard-rspec'
   gem 'rb-fsevent'
   gem 'shotgun'
-  gem 'debugger'
   gem 'simplecov'
   gem 'cane'
   gem 'rack-test'
   gem 'reek'
-
 end
 
 group :evaluations do
