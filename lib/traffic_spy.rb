@@ -19,6 +19,18 @@ module TrafficSpy
       erb :index
     end
 
+    post '/sources' do
+      output = Controller.process_source(params)
+      status output[:code]
+      body output[:message]
+    end
+
+    post '/sources/:identifier/data' do |identifier|
+      output = Controller.process_payload(params,identifier)
+      status output[:code]
+      body output[:message]
+    end
+
     get '/sources/:identifier/events' do |identifier|
       pass unless Source.exists?(:identifier => identifier)
       @source       = Source.find(:identifier => identifier)
@@ -74,33 +86,8 @@ module TrafficSpy
     end
 
     get '/sources/*/urls/*' do
-      "URL not Requested, go back to your home"
+      "URL has not been requested, go back to your home"
     end
 
-    post '/sources' do
-      output = Controller.process_source(params)
-      status output[:code]
-      body output[:message]
-    end
-
-    post '/sources/:identifier/data' do |identifier|
-      if params["payload"] == nil || params["payload"] == ''
-        output = {:code    => 400,
-                  :message => "Bad Request! missing payload"}
-      else
-        json = StringIO.new(params["payload"])
-        parser = Yajl::Parser.new
-        payload = parser.parse(json)
-        if Action.exists?(:requested_at => payload["requestedAt"])
-          output = {:code    => 403,
-                    :message => "Request payload already received."}
-        else Action.create(identifier, payload)
-          output = {:code    => 200,
-                    :message => "OK"}
-        end
-      end
-      status output[:code]
-      body output[:message]
-    end
   end
 end
