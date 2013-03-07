@@ -11,6 +11,7 @@ gem 'useragent'
 gem 'sqlite3'
 gem 'yajl-ruby'
 gem 'rake'
+gem 'rack'
 
 group :development do
   gem 'simplecov'
