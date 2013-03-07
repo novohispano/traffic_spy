@@ -1,99 +1,75 @@
-<div class="container">
- 
-  <h1><%= @source.identifier %> Statistics</h1>
-  
-  <div class="row">
-    <h4>URL Breakdown</h4>
-    <div class="span5">
-      <p>Most requested URLS to least requested URLS (url)</p>
-        <table class="span4 table table-hover table-bordered">
+<div class="row" style="padding: 40px;">
+  <div class="span9">
+    <h1><%= @source.identifier %> statistics.</h1>
+    <div class="row">
+      <div class="span9">
+        <h3>URL breakdown</h3>
+        <p>Most requested urls.</p>
+        <table class="table table-hover table-bordered table-striped">
           <tr>
-            <th>path</th>
-            <th>count</th>
+            <th>Path.</th>
+            <th>Count.</th>
           </tr>
-        <% @urls.sort_by {|k,v| -v}.each do |path,request_count| %>
+            <% @urls.sort_by {|k,v| -v}.each do |path, request_count| %>
           <tr>
             <td><a href="/sources/<%= @source.identifier %>/urls<%= path %>"><%= @source.root_url %><%= path %></a></td>
-          <td>count: <%= request_count %></td>
+            <td>count: <%= request_count %></td>
           </tr>
-        <% end %>
-      </table>
+            <% end %>
+          </table>
+        </div>
+      </div>
+      <div >
+        <div id="url_breakdown" height="100%"></div>
+      </div>
     </div>
-    <div class="span5">
-      <div id="url_breakdown" height="100%"></div>
-    </div>
-  </div>
-
-<hr />
-  
-  <div class="row">
-    <h4>Average Response Time</h4>
-    <div class="span5">
-      <div id="response_time_breakdown" height="100%"></div>
-    </div>
-    <div class="span5">
-      <p>Longest average response time per URL to shortest</p>
-      <table class="table table-hover table-bordered">
+    <div class="span9">
+      <h3>Average Response Time</h3>
+      <p>Average response time per URL.</p>
+      <table class="table table table-hover table-bordered table-striped">
         <tr>
           <th>Path</th>
           <th>Average Response</th>
         </tr>
-        <% @url_response.sort_by {|k,v| -v}.each do |url, avg_time| %>
-          <tr>
-            <td><%= url %></td>
-            <td><%= avg_time.to_s[0..4] %></td>
-          </tr>
+          <% @url_response.sort_by {|k,v| -v}.each do |url, avg_time| %>
+        <tr>
+          <td><%= url %></td>
+          <td><%= avg_time.to_s[0..4] %></td>
+        </tr>
         <% end %>
-      </table>
+        </table>
+        <div>
+          <div id="response_time_breakdown" height="100%"></div>
+        </div>
     </div>
-  </div>
-<!-- 
-<hr />
-  
-  <div class="row">
-    <h4>Events</h4>
-    <p><a href="/sources/<%= @source.identifier %>/events">View Aggregate Event Data</a></p>
-  </div>
- -->
-<hr />
-  
-  <div class="row">
-    <h4>Browser Breakdown</h4>
-    <div class="span5">
+    <div class="span9">
+    <h3>Browser Breakdown</h3>
       <p>Web browser breakdown across all requests (userAgent)</p>
       <% @browsers.sort_by {|k,v| -v}.each do |browser,count| %>
-        <div>browser: <%= browser %></div>
-        <div>count: <%= count %></div>
+      <div>browser: <%= browser %></div>
+      <div>count: <%= count %></div>
       <% end %>
     </div>
-    <div class="span5">
-      <p></p>
-    </div>
-  </div>
-
-<hr />
-  <div class="row">
-    <h4>OS Breakdown</h4>
-    <div class="span5">
+    <div class="span9">
+    <h3>OS Breakdown</h3>
       <p>OS breakdown across all requests (userAgent)</p>
       <% @operating_systems.sort_by {|k,v| -v}.each do |os,count| %>
-        <div>os: <%= os %></div>
-        <div>count: <%= count %></div>
+      <div>os: <%= os %></div>
+      <div>count: <%= count %></div>
       <% end %>
     </div>
     <div class="span5">
       <p></p>
     </div>
   </div>
-<hr />
-  
+  <hr />
   <div class="row">
     <h4>Resolution Breakdown</h4>
     <div class="span5">
       <p>Screen Resolution across all requests (Width x Height)</p>
       <% @resolutions.sort_by {|k,v| -v}.each do |resolution, count| %>
-        <div>resolution: <%= resolution %></div>
-        <div>count: <%= count %></div>
+      <div>resolution: <%= resolution %></div>
+      <div>count: <%= count %></div>
       <% end %>
     </div>
     <div class="span5">
@@ -101,18 +77,19 @@
     </div>
   </div>
 
+  </div>
 </div>
-  
+
 <script>Morris.Bar({
   element: 'url_breakdown',
   data: [
-   <% @urls.each_with_index do |(path, count), index| %>
-    <% if index == @urls.count - 1 %> 
-      {y: "<%= path %>", a: <%= count.to_i %>}
-    <% else %>
-      {y: "<%= path %>", a: <%= count.to_i %>},
-    <% end %>
-    <% end %>
+  <% @urls.each_with_index do |(path, count), index| %>
+  <% if index == @urls.count - 1 %> 
+  {y: "<%= path %>", a: <%= count.to_i %>}
+  <% else %>
+  {y: "<%= path %>", a: <%= count.to_i %>},
+  <% end %>
+  <% end %>
   ],
   xkey: 'y',
   ykeys: ['a'],
@@ -121,13 +98,13 @@
 <script>Morris.Bar({
   element: 'response_time_breakdown',
   data: [
-   <% @url_response.sort_by {|k,v| -v}.each_with_index do |(url, avg_time), index| %>
-    <% if index == @url_response.count - 1 %> 
-      {y: "<%= url %>", a: <%= avg_time %>}
-    <% else %>
-      {y: "<%= url %>", a: <%= avg_time %>},
-    <% end %>
-    <% end %>
+  <% @url_response.sort_by {|k,v| -v}.each_with_index do |(url, avg_time), index| %>
+  <% if index == @url_response.count - 1 %> 
+  {y: "<%= url %>", a: <%= avg_time %>}
+  <% else %>
+  {y: "<%= url %>", a: <%= avg_time %>},
+  <% end %>
+  <% end %>
   ],
   xkey: 'y',
   ykeys: ['a'],

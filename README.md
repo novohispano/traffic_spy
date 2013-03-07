@@ -1,29 +1,22 @@
 # TrafficSpy
 
-TODO: Write a gem description
+TrafficSpy is a Web Analytics tool developed in gSchool.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Before you clone this repo, make sure you have postgres installed. Then create a traffic_spy database. Believe us, you want to do that.
 
-    gem 'traffic_spy'
+    createdb traffic_spy
 
-And then execute:
+To run the app, just type:
 
-    $ bundle
+    bundle exec shotgun
 
-Or install it yourself as:
+Make sure that you are within the traffic_spy directory.
 
-    $ gem install traffic_spy
+## Final Thougths
 
-## Usage
+We hope you like our little app. If you have comments or feedback, follow us on Twitter.
 
-TODO: Write usage instructions here
-
-## Contributing
-
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+Jorge Téllez - <http://twitter.com/novohispano>
+Blair Anderson - <http://twitter.com/blairanderson>

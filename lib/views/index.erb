@@ -1,30 +1,31 @@
-<div id="wrap">
-  <div class="span2 pull-left">
-    <ul class="unstyled">
-      <h2>View Stats</h2>
-      <% @sources.each do |source| %>
-        <li><p class="lead"><a href="/sources/<%= source.identifier %>">
-          <%= source.identifier %></a></p></li>
+<div class="row" style="padding: 40px;">
+  <div class="span3">
+    <h1 style="padding-bottom: 10px;">Sources.</h1>
+    <% @sources.each do |source| %>
+    <p class="lead"><a href="/sources/<%= source.identifier %>">
+      <%= source.identifier %></a></p>
       <% end %>
-    </ul>
   </div>
-  <div class="container" align="center">
-    <div class="page-header">
-      <h1>Post some data.</h1>
+  <div class="span6">
+    <div>
+      <h1 style="padding-bottom: 10px;">Post some data.</h1>
     </div>
     <div>
       <p class="lead">
-        Welcome to TrafficSpy, the web analytics tool developed at gSchool.
+        Welcome to TrafficSpy, <br />the web analytics tool developed at gSchool.
       </p>
+    </div>
+    <div>
+      <p>Register your website.</p>
     </div>
     <div>
       <form action='/sources' method='post'>
         <fieldset>
           <div>
-            <input class="input-xlarge span4" type='text' placeholder="identifier" name="identifier" value="jumpstartlab"/>
+            <input class="input-xlarge span4" type='text' placeholder="identifier" name="identifier"/>
           </div>
           <div>
-            <input class="input-xlarge span4" type='text' placeholder="url" name="rootUrl" value="http://jumpstartlab.com"/>
+            <input class="input-xlarge span4" type='text' placeholder="url" name="rootUrl"/>
           </div>
           <div>
             <input type='submit' class='btn btn-primary span4'/>
@@ -34,5 +35,4 @@
     </div>
     <div id="myfirstchart" style="height: 250px;"></div>
   </div>
-  <div id="push"></div>
 </div>
