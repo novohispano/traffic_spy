@@ -9,6 +9,7 @@ require "debugger"
 
 require "./lib/traffic_spy/db/schema"
 require "./lib/traffic_spy/models/init"
+require "./lib/controller"
 
 module TrafficSpy
   class AppServer < Sinatra::Base
@@ -16,6 +17,18 @@ module TrafficSpy
     get '/' do
       @sources = Source.all
       erb :index
+    end
+
+    post '/sources' do
+      output = Controller.process_source(params)
+      status output[:code]
+      body output[:message]
+    end
+
+    post '/sources/:identifier/data' do |identifier|
+      output = Controller.process_payload(params,identifier)
+      status output[:code]
+      body output[:message]
     end
 
     get '/sources/:identifier/events' do |identifier|
@@ -38,12 +51,6 @@ module TrafficSpy
       erb :event_show
     end
 
-    get '/sources/*/events/*' do
-      identifier, event_name = params[:splat]
-      %{<h1>Sorry, event '#{event_name}' does not exist. Go back to
-       <a href='/sources/#{identifier}/events'>#{identifier} events</a></h1>}
-    end
-
     get '/sources/:identifier' do |identifier|
       pass unless Source.exists?(:identifier => identifier)
       @source            = Source.find(:identifier => identifier)
@@ -57,10 +64,6 @@ module TrafficSpy
       erb :sources_index
     end
 
-    get '/sources/:identifier' do |identifier|
-      "#{identifier} does not exist!"
-    end
-
     get '/sources/*/urls/*' do
       identifier, path = params[:splat]
       pass              unless Source.exists?(:identifier => identifier)
@@ -72,43 +75,18 @@ module TrafficSpy
       erb :url_show
     end
 
+    get '/sources/:identifier' do |identifier|
+      "#{identifier} does not exist!"
+    end
+
+    get '/sources/*/events/*' do
+      identifier, event_name = params[:splat]
+      %{<h1>Sorry, event '#{event_name}' does not exist. Go back to
+       <a href='/sources/#{identifier}/events'>#{identifier} events</a></h1>}
+    end
+
     get '/sources/*/urls/*' do
-      "URL not Requested, go back to your home"
-    end
-
-    post '/sources' do
-      if Source.exists?(:identifier => params[:identifier])
-        output = {:code    => 403,
-                  :message => "Identifier already exists!"}
-      elsif Source.create(params)
-        output = {:code    => 200,
-                  :message => "#{{:identifier => params[:identifier]}.to_json}"}
-      else
-        output = {:code    => 400,
-                  :message => "Bad Request! missing required parameters"}
-      end
-      status output[:code]
-      body output[:message]
-    end
-
-    post '/sources/:identifier/data' do |identifier|
-      if params["payload"] == nil || params["payload"] == ''
-        output = {:code    => 400,
-                  :message => "Bad Request! missing payload"}
-      else
-        json    = StringIO.new(params["payload"])
-        parser  = Yajl::Parser.new
-        payload = parser.parse(json)
-        if Action.exists?(:requested_at => payload["requestedAt"])
-          output = {:code    => 403,
-                    :message => "Request payload already received."}
-        else Action.create(identifier, payload)
-          output = {:code    => 200,
-                    :message => "OK"}
-        end
-      end
-      status output[:code]
-      body output[:message]
+      "URL has not been requested, go back to your home"
     end
   end
 end
