@@ -1,4 +1,4 @@
-<div class="row" style="padding: 40px;">
+<div class="row" style="padding: 40px 40px 40px 135px;">
   <div class="span9">
     <h1><%= @source.identifier %> statistics.</h1>
     <div class="row">
@@ -10,73 +10,85 @@
             <th>Path.</th>
             <th>Count.</th>
           </tr>
-            <% @urls.sort_by {|k,v| -v}.each do |path, request_count| %>
+          <% @urls.sort_by {|k,v| -v}.each do |path, request_count| %>
           <tr>
             <td><a href="/sources/<%= @source.identifier %>/urls<%= path %>"><%= @source.root_url %><%= path %></a></td>
             <td>count: <%= request_count %></td>
           </tr>
-            <% end %>
-          </table>
-        </div>
-      </div>
-      <div >
-        <div id="url_breakdown" height="100%"></div>
-      </div>
-    </div>
-    <div class="span9">
-      <h3>Average Response Time</h3>
-      <p>Average response time per URL.</p>
-      <table class="table table table-hover table-bordered table-striped">
-        <tr>
-          <th>Path</th>
-          <th>Average Response</th>
-        </tr>
-          <% @url_response.sort_by {|k,v| -v}.each do |url, avg_time| %>
-        <tr>
-          <td><%= url %></td>
-          <td><%= avg_time.to_s[0..4] %></td>
-        </tr>
-        <% end %>
+          <% end %>
         </table>
-        <div>
-          <div id="response_time_breakdown" height="100%"></div>
-        </div>
+      </div>
     </div>
-    <div class="span9">
+    <div >
+      <div id="url_breakdown" height="100%"></div>
+    </div>
+  </div>
+  <div class="span9">
+    <h3>Average Response Time</h3>
+    <p>Average response time per URL.</p>
+    <table class="table table table-hover table-bordered table-striped">
+      <tr>
+        <th>Path.</th>
+        <th>Average response time.</th>
+      </tr>
+      <% @url_response.sort_by {|k,v| -v}.each do |url, avg_time| %>
+      <tr>
+        <td><%= url %></td>
+        <td><%= avg_time.to_s[0..4] %></td>
+      </tr>
+      <% end %>
+    </table>
+    <div>
+      <div id="response_time_breakdown" height="100%"></div>
+    </div>
+  </div>
+  <div class="span9">
     <h3>Browser Breakdown</h3>
-      <p>Web browser breakdown across all requests (userAgent)</p>
+    <p>Web browser breakdown across all requests (userAgent)</p>
+    <table class="table table table-hover table-bordered table-striped">
+      <tr>
+        <th>Browser.</th>
+        <th>Count.</th>
+      </tr>
       <% @browsers.sort_by {|k,v| -v}.each do |browser,count| %>
-      <div>browser: <%= browser %></div>
-      <div>count: <%= count %></div>
+      <tr>
+        <td><%= browser %></td>
+        <td><%= count %></td>
+      </tr>
       <% end %>
-    </div>
-    <div class="span9">
+    </table>
+  </div>
+  <div class="span9">
     <h3>OS Breakdown</h3>
-      <p>OS breakdown across all requests (userAgent)</p>
+    <p>OS breakdown across all requests (userAgent)</p>
+    <table class="table table table-hover table-bordered table-striped">
+      <tr>
+        <th>OS.</th>
+        <th>Count.</th>
+      </tr>
       <% @operating_systems.sort_by {|k,v| -v}.each do |os,count| %>
-      <div>os: <%= os %></div>
-      <div>count: <%= count %></div>
+      <tr>
+        <td>OS: <%= os %></td>
+        <td>Count: <%= count %></td>
+      </tr>
       <% end %>
-    </div>
-    <div class="span5">
-      <p></p>
-    </div>
+    </table>
   </div>
-  <hr />
-  <div class="row">
-    <h4>Resolution Breakdown</h4>
-    <div class="span5">
-      <p>Screen Resolution across all requests (Width x Height)</p>
+  <div class="span9">
+    <h3>Resolution Breakdown</h3>
+    <p>Screen Resolution across all requests (Width x Height)</p>
+    <table class="table table table-hover table-bordered table-striped">
+      <tr>
+        <th>Resolution.</th>
+        <th>Count.</th>
+      </tr>
       <% @resolutions.sort_by {|k,v| -v}.each do |resolution, count| %>
-      <div>resolution: <%= resolution %></div>
-      <div>count: <%= count %></div>
+      <tr>
+        <td>Resolution: <%= resolution %></td>
+        <td>Count: <%= count %></td>
+      </tr>
       <% end %>
-    </div>
-    <div class="span5">
-      <p></p>
-    </div>
-  </div>
-
+    </table>
   </div>
 </div>
 
