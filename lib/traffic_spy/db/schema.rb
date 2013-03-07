@@ -1,7 +1,8 @@
 require "sequel"
 
 puts "Connecting to Postgres... #{Time.now}"
-DB = Sequel.connect("postgres://localhost/traffic_spy")
+# DB = Sequel.connect("postgres://localhost/traffic_spy")
+DB = Sequel.connect(ENV['DATABASE_URL'])
 puts "Connected to DB successfully!"
 
 unless DB.table_exists?(:actions)
