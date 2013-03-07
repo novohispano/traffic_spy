@@ -5,7 +5,7 @@ module TrafficSpy
     let (:payload) {{
       "url"              => "http://chicken.com/coocoo",
       "requestedAt"      => "2033-02-16 21:38:28 -0700",
-      "respondedIn"      => 1000,
+      "respondedIn"      => 50000,
       "referredBy"       => "http://jumpstartlab.com",
       "requestType"      => "TEST",
       "parameters"       => [],
@@ -20,7 +20,7 @@ module TrafficSpy
       Action.create("jumpstartlab", payload)
       actions = Action.all
       result = Action.response_times(actions)
-      expect(result["http://chicken.com/coocoo"]).to eq 1000
+      expect(result["http://chicken.com/coocoo"]).to eq 50000
     end
 
     it "should create an action" do
@@ -49,7 +49,7 @@ module TrafficSpy
 
     it "should return all the browsers associated with this action" do
       Action.create("jumpstartlab", payload)
-      actions = Action.all
+      actions = Action.find_all(:responded_in => 50000)
       result = Action.browsers(actions)
       expect(result["Safari"]).to eq 1
     end
@@ -77,14 +77,14 @@ module TrafficSpy
 
     it "should return a hash of event data grouped by hour" do 
       Action.create("jumpstartlab", payload)
-      actions = Action.find_all(:responded_in => 1000)
+      actions = Action.find_all(:responded_in => 50000)
       result = Action.hour_by_hour(actions)
       expect(result.collect { |k, v| v }).to eq [1]
     end
 
     it "should find all actions related to an attribute" do
       Action.create("jumpstartlab", payload)
-      inspect = Action.find_all(:responded_in => 1000).first
+      inspect = Action.find_all(:responded_in => 50000).first
       expect(inspect.requested_at.to_s).to eq "2033-02-16 21:38:28 -0700"
     end
   end
