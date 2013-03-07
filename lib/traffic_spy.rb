@@ -14,6 +14,10 @@ require "./lib/controller"
 module TrafficSpy
   class AppServer < Sinatra::Base
 
+    get '/contact' do
+      erb :contact
+    end
+
     get '/' do
       @sources = Source.all
       erb :index
