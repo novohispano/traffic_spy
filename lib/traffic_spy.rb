@@ -51,12 +51,6 @@ module TrafficSpy
       erb :event_show
     end
 
-    get '/sources/*/events/*' do
-      identifier, event_name = params[:splat]
-      %{<h1>Sorry, event '#{event_name}' does not exist. Go back to
-       <a href='/sources/#{identifier}/events'>#{identifier} events</a></h1>}
-    end
-
     get '/sources/:identifier' do |identifier|
       pass unless Source.exists?(:identifier => identifier)
       @source            = Source.find(:identifier => identifier)
@@ -70,10 +64,6 @@ module TrafficSpy
       erb :sources_index
     end
 
-    get '/sources/:identifier' do |identifier|
-      "#{identifier} does not exist!"
-    end
-
     get '/sources/*/urls/*' do
       identifier, path = params[:splat]
       pass              unless Source.exists?(:identifier => identifier)
@@ -83,6 +73,16 @@ module TrafficSpy
       url_id            = Url.find(:path => @path).id
       @actions          = Action.find_all(:url_id => url_id)
       erb :url_show
+    end
+
+    get '/sources/:identifier' do |identifier|
+      "#{identifier} does not exist!"
+    end
+
+    get '/sources/*/events/*' do
+      identifier, event_name = params[:splat]
+      %{<h1>Sorry, event '#{event_name}' does not exist. Go back to
+       <a href='/sources/#{identifier}/events'>#{identifier} events</a></h1>}
     end
 
     get '/sources/*/urls/*' do
